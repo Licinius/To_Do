@@ -1,5 +1,11 @@
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-public class Categorie {
+public class Categorie implements Serializable {
+
+	private static final long serialVersionUID = 1L;
 	private int identifiant;
 	private String nom;
 
@@ -34,5 +40,14 @@ public class Categorie {
 		return "Categorie [identifiant=" + identifiant + ", nom=" + nom + "]";
 	}
 
+	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
+		this.identifiant = ois.readInt();
+		this.nom = ois.readUTF();
+	}
+	
+	private void writeObject(ObjectOutputStream oos) throws IOException{
+		oos.writeInt(identifiant);
+		oos.writeUTF(nom);
+	}
 	
 }
