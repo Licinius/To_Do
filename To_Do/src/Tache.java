@@ -1,5 +1,5 @@
 import java.util.Calendar;
-
+import ExceptionTo_Do.*;
 public abstract class Tache {
 
 	private final int id;
@@ -9,7 +9,7 @@ public abstract class Tache {
 	private Categorie categorie;
 	private static int compteur = 0;
 
-	public Tache(int id, String nom, String description, Calendar echeance, Categorie categorie) {
+	public Tache(int id, String nom, String description, Calendar echeance, Categorie categorie) throws ExceptionTacheAnterieur{
 		this.id = compteur++;
 		this.nom = nom;
 		this.description = description;
@@ -17,11 +17,11 @@ public abstract class Tache {
 		if (echeance.after(Calendar.getInstance())) {
 			this.echeance = echeance;
 		} else {
-			System.out.println("Erreur date d'echeance anterieur à la date actuelle");
+			throw new ExceptionTacheAnterieur(echeance.toString());
 		}
 	}
 
-	public Tache(int id, String nom, Calendar echeance) {
+	public Tache(int id, String nom, Calendar echeance) throws ExceptionTacheAnterieur{
 		this.id = compteur++;
 		this.nom = nom;
 		this.description = "";
@@ -29,13 +29,15 @@ public abstract class Tache {
 		if (echeance.after(Calendar.getInstance())) {
 			this.echeance = echeance;
 		} else {
-			System.out.println("Erreur date d'echeance anterieur à la date actuelle");
+			throw new ExceptionTacheAnterieur(echeance.toString());
 		}
 	}
 
-//	public int getJourRestant() {
-//		
-//	}
+public int getJourRestant() {
+	long diff = echeance.getTimeInMillis() - System.currentTimeMillis();
+	return (int)  (diff/86400000); // Diviser par le nombre de milliseconde dans une journee
+	 
+}
 
 
 }

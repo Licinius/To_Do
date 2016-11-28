@@ -22,10 +22,12 @@ public class mainCategorie {
 				
 		 // création d'un objet à sérializer
 		Categorie m =  new Categorie("Surcouf") ;
+		Categorie m2 = new Categorie ("Perso");
 
 		 // sérialization de l'objet
 		try {
 			oos.writeObject(m) ;
+			oos.writeObject(m2);
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
@@ -49,13 +51,16 @@ public class mainCategorie {
 				
 		 // désérialization de l'objet
 		Categorie mOut = null;
+		Categorie mOut2 = null;
 		try {
 			mOut = (Categorie)ois.readObject();
+			mOut2 = (Categorie)ois.readObject();
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(m) ;
+		System.out.println(mOut) ;
+		System.out.print(mOut2);
 
 	}
 
