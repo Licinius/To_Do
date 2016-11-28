@@ -14,11 +14,9 @@ public abstract class Tache {
 		this.nom = nom;
 		this.description = description;
 		this.categorie = categorie;
-		if (echeance.after(Calendar.getInstance())) {
-			this.echeance = echeance;
-		} else {
-			throw new ExceptionTacheAnterieur(echeance.toString());
-		}
+		if (echeance.after(Calendar.getInstance()))	this.echeance = echeance;
+		else	throw new ExceptionTacheAnterieur(echeance.toString());
+		
 	}
 
 	public Tache(int id, String nom, Calendar echeance) throws ExceptionTacheAnterieur{
@@ -26,11 +24,8 @@ public abstract class Tache {
 		this.nom = nom;
 		this.description = "";
 		this.categorie = null;
-		if (echeance.after(Calendar.getInstance())) {
-			this.echeance = echeance;
-		} else {
-			throw new ExceptionTacheAnterieur(echeance.toString());
-		}
+		if (echeance.after(Calendar.getInstance()))	this.echeance = echeance;
+		else	throw new ExceptionTacheAnterieur(echeance.toString());
 	}
 
 public int getJourRestant() {
