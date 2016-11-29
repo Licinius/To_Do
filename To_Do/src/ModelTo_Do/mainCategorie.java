@@ -1,3 +1,4 @@
+package ModelTo_Do;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -20,11 +21,11 @@ public class mainCategorie {
 			e1.printStackTrace();
 		}
 				
-		 // création d'un objet à sérializer
+		 // crï¿½ation d'un objet ï¿½ sï¿½rializer
 		Categorie m =  new Categorie("Surcouf") ;
 		Categorie m2 = new Categorie ("Perso");
 
-		 // sérialization de l'objet
+		 // sï¿½rialization de l'objet
 		try {
 			oos.writeObject(m) ;
 			oos.writeObject(m2);
@@ -49,7 +50,7 @@ public class mainCategorie {
 			e.printStackTrace();
 		}
 				
-		 // désérialization de l'objet
+		 // dï¿½sï¿½rialization de l'objet
 		Categorie mOut = null;
 		Categorie mOut2 = null;
 		try {

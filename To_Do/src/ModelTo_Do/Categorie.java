@@ -1,3 +1,4 @@
+package ModelTo_Do;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -10,7 +11,7 @@ public class Categorie implements Serializable {
 	private String nom;
 
 	/**
-	 * Constructeur d'une catégorie avec un nom
+	 * Constructeur d'une catï¿½gorie avec un nom
 	 * @param nom
 	 */
 	public Categorie(String nom) {
@@ -26,7 +27,7 @@ public class Categorie implements Serializable {
 	}
 	
 	/**
-	 * Modifier le nom de la catégorie par le nom passé en paramètre
+	 * Modifier le nom de la catï¿½gorie par le nom passï¿½ en paramï¿½tre
 	 * @param nom
 	 */
 	public void setNom(String nom) {
@@ -34,7 +35,7 @@ public class Categorie implements Serializable {
 	}
 	
 	/**
-	 * ToString d'une catégorie
+	 * ToString d'une catï¿½gorie
 	 */
 	public String toString() {
 		return "Categorie [identifiant=" + identifiant + ", nom=" + nom + "]";
