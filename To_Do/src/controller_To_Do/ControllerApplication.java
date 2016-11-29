@@ -11,12 +11,14 @@ import java.util.ArrayList;
 
 
 import model_To_Do.Categorie;
+import model_To_Do.Tache;
 
 public class ControllerApplication {
 	private ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
-	private ArrayList listTache = new ArrayList();
+	private ArrayList<Tache> listTache = new ArrayList<Tache>();
 	
 	public ControllerApplication() throws IOException, ClassNotFoundException{
+		//Lecture des categories
 		File fichierIn =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
 		FileInputStream fichierInStream = new FileInputStream(fichierIn);
 		ObjectInputStream ois=null;
@@ -24,7 +26,17 @@ public class ControllerApplication {
 		while(fichierInStream.available() > 0){
 			listCategorie.add((Categorie)ois.readObject());
 		}
-		ois.close();		
+		ois.close();
+		
+		//Lecture des taches
+		fichierIn =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
+		fichierInStream = new FileInputStream(fichierIn);
+		ois = new ObjectInputStream(fichierInStream);
+		while(fichierInStream.available() > 0){
+			listTache.add((Tache)ois.readObject());
+		}
+		ois.close();
+		
 	}
 	/**
 	 * Cette fonction crée un nouveau fichier contenant les nouvelles catégories
