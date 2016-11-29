@@ -4,7 +4,8 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.Calendar;
 
-import exception_To_Do.*;
+import exception_To_Do.ExceptionTacheAnterieur;
+
 public abstract class Tache {
 
 	private int id;

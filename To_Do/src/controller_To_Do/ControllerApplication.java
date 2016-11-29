@@ -2,13 +2,12 @@ package controller_To_Do;
 
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-
+import java.util.Collections;
 
 import model_To_Do.Categorie;
 import model_To_Do.Tache;
@@ -80,5 +79,15 @@ public class ControllerApplication {
 			System.out.println(cat.toString());
 		}
 		System.out.println();
+	}
+	
+	public void triSimple() {
+		for (int i = 0; i < listTache.size()-1; i++) {
+			for (int j = i+1; j < listTache.size(); j++) {
+				if (listTache.get(i).getJourRestant() > listTache.get(j).getJourRestant()) {
+					Collections.swap(listTache, i, j);
+				}
+			}
+		}
 	}
 }
