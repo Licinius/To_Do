@@ -1,4 +1,4 @@
-package ModelTo_Do;
+package model_To_Do;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
@@ -14,7 +14,8 @@ public class Categorie implements Serializable {
 	 * Constructeur d'une cat�gorie avec un nom
 	 * @param nom
 	 */
-	public Categorie(String nom) {
+	public Categorie(int id,String nom) {
+		this.identifiant = id;
 		this.nom = nom;
 	}
 	

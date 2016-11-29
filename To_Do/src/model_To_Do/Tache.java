@@ -1,6 +1,7 @@
-package ModelTo_Do;
+package model_To_Do;
 import java.util.Calendar;
-import ExceptionTo_Do.*;
+
+import exception_To_Do.*;
 public abstract class Tache {
 
 	private final int id;

@@ -1,7 +1,7 @@
-package ModelTo_Do;
+package model_To_Do;
 import java.util.Calendar;
 
-import ExceptionTo_Do.ExceptionTacheAnterieur;
+import exception_To_Do.ExceptionTacheAnterieur;
 
 public class TacheLongCours extends Tache {
 
