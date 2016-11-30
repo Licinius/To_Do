@@ -2,6 +2,7 @@ package controller_To_Do;
 
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -21,20 +22,26 @@ public class ControllerApplication {
 		File fichierIn =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
 		FileInputStream fichierInStream = new FileInputStream(fichierIn);
 		ObjectInputStream ois=null;
-		ois = new ObjectInputStream(fichierInStream);
-		while(fichierInStream.available() > 0){
-			listCategorie.add((Categorie)ois.readObject());
+		if(fichierInStream.available()>0){
+			ois = new ObjectInputStream(fichierInStream);
+			while(fichierInStream.available() > 0){
+				listCategorie.add((Categorie)ois.readObject());
+			}
+			ois.close();
 		}
-		ois.close();
+
 		
 		//Lecture des taches
 		fichierIn =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		fichierInStream = new FileInputStream(fichierIn);
-		ois = new ObjectInputStream(fichierInStream);
-		while(fichierInStream.available() > 0){
-			listTache.add((Tache)ois.readObject());
+		if(fichierInStream.available()>0){
+			ois = new ObjectInputStream(fichierInStream);
+			while(fichierInStream.available() > 0){
+				listTache.add((Tache)ois.readObject());
+			}
+			ois.close();
 		}
-		ois.close();
+		
 		
 	}
 	/**
@@ -44,16 +51,17 @@ public class ControllerApplication {
 	 * @throws IOException
 	 */
 	public void createCategorie(Categorie categorie) throws IOException{
-		listCategorie.add(categorie);
-		File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
-		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-		ObjectOutputStream oos=null;
-		oos = new ObjectOutputStream(fichierOutStream);
-		for(Categorie cat : this.listCategorie){
-			oos.writeObject(cat);
+		if(categorie!=null){
+			listCategorie.add(categorie);
+			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+			ObjectOutputStream oos=null;
+			oos = new ObjectOutputStream(fichierOutStream);
+			for(Categorie cat : this.listCategorie){
+				oos.writeObject(cat);
+			}
+			oos.close();
 		}
-		oos.close();
-
 	}
 	
 	/**
@@ -63,15 +71,61 @@ public class ControllerApplication {
 	 * @throws IOException
 	 */
 	public void deleteCategorie(Categorie categorie) throws IOException{
-		listCategorie.remove(categorie);
-		File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+		if(categorie!=null){
+			listCategorie.remove(categorie);
+			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+			ObjectOutputStream oos=null;
+			oos = new ObjectOutputStream(fichierOutStream);
+			for(Categorie cat : this.listCategorie){
+				oos.writeObject(cat);
+			}
+			oos.close();
+			for(Tache t : this.listTache){
+				if(t.getCategorie() != null){
+					if(t.getCategorie().equals(categorie))	t.setCategorie(null);
+				}
+			}
+			updateTache();
+		}
+	}
+	
+	private void updateTache() throws IOException{
+		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
 		ObjectOutputStream oos=null;
 		oos = new ObjectOutputStream(fichierOutStream);
-		for(Categorie cat : this.listCategorie){
-			oos.writeObject(cat);
+		for(Tache t : this.listTache){
+			oos.writeObject(t);
 		}
 		oos.close();
+	}
+	public void createTache(Tache tache) throws IOException{
+		if(tache !=null){
+			listTache.add(tache);
+			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
+			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+			ObjectOutputStream oos=null;
+			oos = new ObjectOutputStream(fichierOutStream);
+			for(Tache t : this.listTache){
+				oos.writeObject(t);
+			}
+			oos.close();
+		}
+	}
+	
+	public void deleteTache(Tache tache) throws IOException{
+		if(tache!=null){
+			listTache.remove(tache);
+			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
+			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+			ObjectOutputStream oos=null;
+			oos = new ObjectOutputStream(fichierOutStream);
+			for(Tache t : this.listTache){
+				oos.writeObject(t);
+			}
+			oos.close();
+		}
 	}
 	
 	public void printCategorie(){
@@ -79,6 +133,15 @@ public class ControllerApplication {
 			System.out.println(cat.toString());
 		}
 		System.out.println();
+	}
+	
+	public void deleteAll() throws FileNotFoundException{
+		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
+		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+		
+		fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+		fichierOutStream = new FileOutputStream(fichierOut);
+		
 	}
 	
 	public void triSimple() {
@@ -89,5 +152,12 @@ public class ControllerApplication {
 				}
 			}
 		}
+	}
+	public void printTache() {
+		for(Tache t : this.listTache){
+			System.out.println(t.toString());
+		}
+		System.out.println();
+		
 	}
 }

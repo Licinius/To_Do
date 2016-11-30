@@ -2,12 +2,14 @@ package model_To_Do;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import exception_To_Do.ExceptionTacheAnterieur;
 
-public abstract class Tache {
-
+public abstract class Tache implements Serializable {
+	private static final long serialVersionUID = 5421937201739723605L;
 	private int id;
 	private	String nom;
 	private String description;
@@ -52,8 +54,28 @@ public abstract class Tache {
 		oos.writeInt(id);
 		oos.writeUTF(description);
 		oos.writeUTF(nom);
+		System.out.println("Je plante là");
 		oos.writeObject(echeance);
 		oos.writeObject(categorie);
+	}
+
+	public Categorie getCategorie() {
+		return categorie;
+	}
+
+	public void setCategorie(Categorie categorie) {
+		this.categorie = categorie;
+	}
+
+	public String toString() {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String formatted = format1.format(echeance.getTime());
+		return "Tache [id=" + id + ", nom=" + nom + ", description=" + description + ", echeance=" + formatted
+				+ ", categorie=" + categorie + "]";
+	}
+	
+	public boolean equals(Tache t){
+		return t.id == this.id;
 	}
 
 

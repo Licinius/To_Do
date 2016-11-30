@@ -8,6 +8,7 @@ import exception_To_Do.ExceptionTacheAnterieur;
 
 public class TacheLongCours extends Tache {
 
+	private static final long serialVersionUID = 3081649104084734383L;
 	private String granularite;
 
 	public TacheLongCours(int id, String nom, String description, Calendar echeance, Categorie categorie, String granularite) throws ExceptionTacheAnterieur{

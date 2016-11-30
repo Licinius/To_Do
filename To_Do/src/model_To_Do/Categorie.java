@@ -52,4 +52,8 @@ public class Categorie implements Serializable {
 		oos.writeUTF(nom);
 	}
 	
+	public boolean equals(Categorie c){
+		return c.identifiant == this.identifiant;
+	}
+	
 }
