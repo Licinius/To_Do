@@ -71,7 +71,13 @@ public abstract class Tache implements Serializable {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(echeance.getTime());
 		return "Tache [id=" + id + ", nom=" + nom + ", description=" + description + ", echeance=" + formatted
-				+ ", categorie=" + categorie + "]";
+				+ ", categorie=" + categorie.getNom() + "]";
+	}
+	
+	public String toStringPourTesterPourLesJLabels() {
+		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		String formatted = format1.format(echeance.getTime());
+		return nom + "\t" + description + "\t" + formatted + "\t" + categorie.getNom();
 	}
 	
 	public boolean equals(Tache t){

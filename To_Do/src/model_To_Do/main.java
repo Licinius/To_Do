@@ -15,7 +15,6 @@ public class main {
 			try {
 				cA = new ControllerApplication();
 			} catch (ClassNotFoundException | IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			Categorie cat = new Categorie(0,"Personnel");
@@ -24,7 +23,6 @@ public class main {
 			try {
 				t = new TachePonctuelle(0, "Faire a manger","Surement du Poulet", date,cat );
 			} catch (ExceptionTacheAnterieur e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			try {
@@ -47,7 +45,6 @@ public class main {
 			try {
 				cA.deleteAll();
 			} catch (FileNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 

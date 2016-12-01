@@ -155,9 +155,15 @@ public class ControllerApplication {
 	}
 	public void printTache() {
 		for(Tache t : this.listTache){
-			System.out.println(t.toString());
+			System.out.println(t.toStringPourTesterPourLesJLabels());
 		}
 		System.out.println();
-		
+
 	}
+	
+	public ArrayList<Tache> getListTache() {
+		return listTache;
+	}
+
+	
 }
