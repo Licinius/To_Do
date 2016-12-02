@@ -17,7 +17,7 @@ public abstract class Tache implements Serializable {
 	private Categorie categorie;
 	private static int compteur = 0;
 
-	public Tache(int id, String nom, String description, Calendar echeance, Categorie categorie) throws ExceptionTacheAnterieur{
+	public Tache(String nom, String description, Calendar echeance, Categorie categorie) throws ExceptionTacheAnterieur{
 		this.id = compteur++;
 		this.nom = nom;
 		this.description = description;
@@ -43,7 +43,8 @@ public abstract class Tache implements Serializable {
 	}
 	
 	protected void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-		this.id = ois.readInt();
+		compteur = ois.readInt();
+		this.id = compteur++;
 		this.description = ois.readUTF();
 		this.nom = ois.readUTF();
 		this.echeance = (Calendar)ois.readObject();
@@ -67,6 +68,10 @@ public abstract class Tache implements Serializable {
 		this.categorie = categorie;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	public String toString() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(echeance.getTime());
@@ -76,8 +81,9 @@ public abstract class Tache implements Serializable {
 	
 	public String toStringPourTesterPourLesJLabels() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
-		String formatted = format1.format(echeance.getTime());
-		return nom + "\t" + description + "\t" + formatted + "\t" + categorie.getNom();
+		String affichage = nom + "\t" + description + "\t" + format1.format(echeance.getTime()) + "\t";
+		affichage += this.categorie == null ? "Sans Catégorie" : categorie.getNom();
+		return affichage;
 	}
 	
 	public boolean equals(Tache t){

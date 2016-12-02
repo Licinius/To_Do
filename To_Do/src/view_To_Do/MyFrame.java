@@ -37,7 +37,7 @@ public class MyFrame extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 	
 		JMenuBar jmb = new JMenuBar();
-		jmb.add(new JMenu("Créer tâche"));jmb.add(new JMenu("Créer catégorie"));jmb.add(new JMenu("modifier catégorie"));
+		jmb.add(new JMenu("Créer tâche"));jmb.add(new JMenu("Créer catégorie"));jmb.add(new JMenu("Modifier catégorie"));
 		setJMenuBar(jmb);
 		
 		controller = cA;
@@ -78,25 +78,42 @@ public class MyFrame extends JFrame{
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
-		Categorie cat = new Categorie(0,"Personnel");
-		Calendar date = new GregorianCalendar(2016, 12, 12);
-		TachePonctuelle t=null;
+		Categorie cat = new Categorie("Personnel");
+		Categorie cat2 = new Categorie("Professionnel");
+		Calendar date = new GregorianCalendar(2016, 12, 12); //YYYY MM DD
+		Calendar date2 = new GregorianCalendar(2019, 12, 25);
+		Calendar date3 = new GregorianCalendar(2021, 02, 15);
+		TachePonctuelle t=null, t2=null, t3=null;
 		try {
-			t = new TachePonctuelle(0, "Faire a manger","Surement du Poulet", date,cat );
+			t = new TachePonctuelle("Faire a manger","Surement du Poulet", date, cat);
+			t2 = new TachePonctuelle("Acheter des cadeaux","Un gros camion pour Lulu", date2, cat);
+			t3 = new TachePonctuelle("Trouver un boulot","C'est fini le chomage", date3, cat2);
 		} catch (ExceptionTacheAnterieur e1) {
 			e1.printStackTrace();
 		}
 		try {
 			cA.createCategorie(cat);
+			cA.createCategorie(cat2);
 			cA.createTache(t);
+			cA.createTache(t2);
+			cA.createTache(t3);
 		} catch (IOException e) {
 			System.out.println("Erreur");
 			e.printStackTrace();
 		}
 		
+//		try {
+//			cA.deleteCategorie(0);
+//			cA.deleteCategorie(1);
+//			cA.deleteCategorie(2);
+//			cA.deleteCategorie(3);
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+	
 		cA.printCategorie();
 		cA.printTache();
-		
 		
 		MyFrame f = new MyFrame(cA);
 		f.setVisible(true);

@@ -16,7 +16,7 @@ import model_To_Do.Tache;
 public class ControllerApplication {
 	private ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
 	private ArrayList<Tache> listTache = new ArrayList<Tache>();
-	
+
 	public ControllerApplication() throws IOException, ClassNotFoundException{
 		//Lecture des categories
 		File fichierIn =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
@@ -30,7 +30,7 @@ public class ControllerApplication {
 			ois.close();
 		}
 
-		
+
 		//Lecture des taches
 		fichierIn =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		fichierInStream = new FileInputStream(fichierIn);
@@ -41,8 +41,8 @@ public class ControllerApplication {
 			}
 			ois.close();
 		}
-		
-		
+
+
 	}
 	/**
 	 * Cette fonction crée un nouveau fichier contenant les nouvelles catégories
@@ -63,7 +63,7 @@ public class ControllerApplication {
 			oos.close();
 		}
 	}
-	
+
 	/**
 	 * Cette fonction crée un nouveau fichier sans la categorie passé en paramètre
 	 * @param categorie 
@@ -89,7 +89,30 @@ public class ControllerApplication {
 			updateTache();
 		}
 	}
-	
+
+	public void deleteCategorie(int id) throws IOException{
+		for (int i = 0; i < listCategorie.size(); i++) {
+			if (listCategorie.get(i).getIdentifiant() == id) {
+				listCategorie.remove(listCategorie.get(i));
+				break;
+			}
+		}
+		File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+		ObjectOutputStream oos=null;
+		oos = new ObjectOutputStream(fichierOutStream);
+		for(Categorie cat : this.listCategorie){
+			oos.writeObject(cat);
+		}
+		oos.close();
+		for(Tache t : this.listTache){
+			if(t.getCategorie() != null){
+				if(t.getCategorie().getIdentifiant() == id)	t.setCategorie(null);
+			}
+		}
+		updateTache();
+	}
+
 	private void updateTache() throws IOException{
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
@@ -113,7 +136,7 @@ public class ControllerApplication {
 			oos.close();
 		}
 	}
-	
+
 	public void deleteTache(Tache tache) throws IOException{
 		if(tache!=null){
 			listTache.remove(tache);
@@ -127,23 +150,41 @@ public class ControllerApplication {
 			oos.close();
 		}
 	}
-	
+
+	public void deleteTache(int id) throws IOException{
+		for (int i = 0; i < listCategorie.size(); i++) {
+			if (listTache.get(i).getId() == id) {
+				listTache.remove(listTache.get(i));
+				break;
+			}
+		}
+		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
+		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+		ObjectOutputStream oos=null;
+		oos = new ObjectOutputStream(fichierOutStream);
+		for(Tache t : this.listTache){
+			oos.writeObject(t);
+		}
+		oos.close();
+	}
+
+
 	public void printCategorie(){
 		for(Categorie cat : this.listCategorie){
 			System.out.println(cat.toString());
 		}
 		System.out.println();
 	}
-	
+
 	public void deleteAll() throws FileNotFoundException{
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-		
+
 		fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
 		fichierOutStream = new FileOutputStream(fichierOut);
-		
+
 	}
-	
+
 	public void triSimple() {
 		for (int i = 0; i < listTache.size()-1; i++) {
 			for (int j = i+1; j < listTache.size(); j++) {
@@ -160,10 +201,10 @@ public class ControllerApplication {
 		System.out.println();
 
 	}
-	
+
 	public ArrayList<Tache> getListTache() {
 		return listTache;
 	}
 
-	
+
 }

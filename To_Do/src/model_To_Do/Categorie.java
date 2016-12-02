@@ -8,14 +8,15 @@ public class Categorie implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int identifiant;
+	private static int compteur = 0;
 	private String nom;
 
 	/**
 	 * Constructeur d'une cat�gorie avec un nom
 	 * @param nom
 	 */
-	public Categorie(int id,String nom) {
-		this.identifiant = id;
+	public Categorie(String nom) {
+		this.identifiant = compteur++;
 		this.nom = nom;
 	}
 	
@@ -35,6 +36,10 @@ public class Categorie implements Serializable {
 		this.nom = nom;
 	}
 	
+	public int getIdentifiant() {
+		return identifiant;
+	}
+
 	/**
 	 * ToString d'une cat�gorie
 	 */
@@ -43,7 +48,8 @@ public class Categorie implements Serializable {
 	}
 
 	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-		this.identifiant = ois.readInt();
+		compteur = ois.readInt();
+		this.identifiant = compteur++;
 		this.nom = ois.readUTF();
 	}
 	

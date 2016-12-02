@@ -17,11 +17,11 @@ public class main {
 			} catch (ClassNotFoundException | IOException e) {
 				e.printStackTrace();
 			}
-			Categorie cat = new Categorie(0,"Personnel");
+			Categorie cat = new Categorie("Personnel");
 			Calendar date = new GregorianCalendar(2016, 12, 12);
 			TachePonctuelle t=null;
 			try {
-				t = new TachePonctuelle(0, "Faire a manger","Surement du Poulet", date,cat );
+				t = new TachePonctuelle("Faire a manger","Surement du Poulet", date,cat );
 			} catch (ExceptionTacheAnterieur e1) {
 				e1.printStackTrace();
 			}
