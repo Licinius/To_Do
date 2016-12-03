@@ -1,14 +1,14 @@
 package view_To_Do;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 
 import javax.swing.BoxLayout;
+import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -18,16 +18,13 @@ import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
 import controller_To_Do.ControllerApplication;
-import exception_To_Do.ExceptionTacheAnterieur;
-import model_To_Do.Categorie;
 import model_To_Do.Tache;
-import model_To_Do.TachePonctuelle;
 
 public class MyFrame extends JFrame{
 	
 //	private JMenu[] menuHorizontal = new JMenu[2];
 	private ControllerApplication controller;
-	private JPanel listTache = new JPanel();;
+	private JPanel panelListTache = new JPanel();;
 	
 	
 	public MyFrame(ControllerApplication cA){
@@ -41,10 +38,9 @@ public class MyFrame extends JFrame{
 		setJMenuBar(jmb);
 		
 		controller = cA;
-		printTache(controller.getListTache());
-		listTache.setLayout(new BoxLayout(listTache, BoxLayout.PAGE_AXIS));
-		
-		add(listTache);
+		printTacheMieux(controller.getListTache());
+		panelListTache.setLayout(new BoxLayout(panelListTache, BoxLayout.PAGE_AXIS));
+		add(panelListTache);
 	}
 	
 	public void printTache(ArrayList<Tache> list) {
@@ -53,11 +49,27 @@ public class MyFrame extends JFrame{
 			str = list.get(i).toStringPourTesterPourLesJLabels().replaceAll("\t", "    ");;
 			JLabel tabJ = new JLabel(str);
 			tabJ.setBorder(new LineBorder(Color.BLACK));
-			listTache.add(tabJ);
+			panelListTache.add(tabJ);
 		}
 
 	}
 	
+	public void printTacheMieux(ArrayList<Tache> list) {
+		for (int i = 0; i < list.size(); i++) {
+			JPanel jp = new JPanel();
+			jp.setLayout(new BorderLayout());
+			jp.setSize(800, 100);
+			String str = list.get(i).toStringPourTesterPourLesJLabels().replaceAll("\t", "    ");;
+			JLabel tabJ = new JLabel(str);
+			tabJ.setBorder(new LineBorder(Color.BLACK));
+			jp.add(tabJ);
+			jp.add(new JButton("bouton"), BorderLayout.EAST);
+			
+			panelListTache.add(jp);
+			
+		}
+		
+	}
 
 	class JMenuListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
@@ -78,29 +90,29 @@ public class MyFrame extends JFrame{
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}
-		Categorie cat = new Categorie("Personnel");
-		Categorie cat2 = new Categorie("Professionnel");
-		Calendar date = new GregorianCalendar(2016, 12, 12); //YYYY MM DD
-		Calendar date2 = new GregorianCalendar(2019, 12, 25);
-		Calendar date3 = new GregorianCalendar(2021, 02, 15);
-		TachePonctuelle t=null, t2=null, t3=null;
-		try {
-			t = new TachePonctuelle("Faire a manger","Surement du Poulet", date, cat);
-			t2 = new TachePonctuelle("Acheter des cadeaux","Un gros camion pour Lulu", date2, cat);
-			t3 = new TachePonctuelle("Trouver un boulot","C'est fini le chomage", date3, cat2);
-		} catch (ExceptionTacheAnterieur e1) {
-			e1.printStackTrace();
-		}
-		try {
-			cA.createCategorie(cat);
-			cA.createCategorie(cat2);
-			cA.createTache(t);
-			cA.createTache(t2);
-			cA.createTache(t3);
-		} catch (IOException e) {
-			System.out.println("Erreur");
-			e.printStackTrace();
-		}
+//		Categorie cat = new Categorie("Personnel");
+//		Categorie cat2 = new Categorie("Professionnel");
+//		Calendar date = new GregorianCalendar(2016, 11, 12); //YYYY MM-1 DD
+//		Calendar date2 = new GregorianCalendar(2019, 11, 25);
+//		Calendar date3 = new GregorianCalendar(2021, 01, 15);
+//		TachePonctuelle t=null, t2=null, t3=null;
+//		try {
+//			t = new TachePonctuelle("Faire a manger","Surement du Poulet", date, cat);
+//			t2 = new TachePonctuelle("Acheter des cadeaux","Un gros camion pour Lulu", date2, cat);
+//			t3 = new TachePonctuelle("Trouver un boulot","C'est fini le chomage", date3, cat2);
+//		} catch (ExceptionTacheAnterieur e1) {
+//			e1.printStackTrace();
+//		}
+//		try {
+//			cA.createCategorie(cat);
+//			cA.createCategorie(cat2);
+//			cA.createTache(t);
+//			cA.createTache(t2);
+//			cA.createTache(t3);
+//		} catch (IOException e) {
+//			System.out.println("Erreur");
+//			e.printStackTrace();
+//		}
 		
 //		try {
 //			cA.deleteCategorie(0);

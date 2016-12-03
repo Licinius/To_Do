@@ -80,10 +80,20 @@ public abstract class Tache implements Serializable {
 	}
 	
 	public String toStringPourTesterPourLesJLabels() {
-		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
 		String affichage = nom + "\t" + description + "\t" + format1.format(echeance.getTime()) + "\t";
 		affichage += this.categorie == null ? "Sans Catégorie" : categorie.getNom();
 		return affichage;
+	}
+	
+	public String[] getInformation() { //recupère les informations pour les affichés au bon endroit
+		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+		String[] str = new String[4];
+		str[0] = this.nom;
+		str[1] = this.description;
+		str[2] = format1.format(echeance.getTime());
+		str[3] = this.categorie == null ? "Sans Catégorie" : categorie.getNom();;
+		return str;
 	}
 	
 	public boolean equals(Tache t){
