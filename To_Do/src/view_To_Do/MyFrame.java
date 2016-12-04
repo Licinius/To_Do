@@ -24,35 +24,39 @@ public class MyFrame extends JFrame{
 	
 //	private JMenu[] menuHorizontal = new JMenu[2];
 	private ControllerApplication controller;
-	private JPanel panelListTache = new JPanel();;
+	private ArrayList<JPanel> panelListTache = new ArrayList<JPanel>();
 	
 	
 	public MyFrame(ControllerApplication cA){
 		//this.matriceTree = matriceTree;
 		setSize(800, 800); 
 		setTitle("Ma liste"); 
+		setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-	
+		
 		JMenuBar jmb = new JMenuBar();
 		jmb.add(new JMenu("Créer tâche"));jmb.add(new JMenu("Créer catégorie"));jmb.add(new JMenu("Modifier catégorie"));
 		setJMenuBar(jmb);
 		
 		controller = cA;
 		printTacheMieux(controller.getListTache());
-		panelListTache.setLayout(new BoxLayout(panelListTache, BoxLayout.PAGE_AXIS));
-		add(panelListTache);
-	}
-	
-	public void printTache(ArrayList<Tache> list) {
-		String str;
-		for (int i = 0; i < list.size(); i++) {
-			str = list.get(i).toStringPourTesterPourLesJLabels().replaceAll("\t", "    ");;
-			JLabel tabJ = new JLabel(str);
-			tabJ.setBorder(new LineBorder(Color.BLACK));
-			panelListTache.add(tabJ);
+		for (int i = 0; i < panelListTache.size(); i++) {
+			add(panelListTache.get(i));
 		}
+		
 
 	}
+	
+//	public void printTache(ArrayList<Tache> list) {
+//		String str;
+//		for (int i = 0; i < list.size(); i++) {
+//			str = list.get(i).toStringPourTesterPourLesJLabels().replaceAll("\t", "    ");;
+//			JLabel tabJ = new JLabel(str);
+//			tabJ.setBorder(new LineBorder(Color.BLACK));
+//			panelListTache.add(tabJ);
+//		}
+//
+//	}
 	
 	public void printTacheMieux(ArrayList<Tache> list) {
 		for (int i = 0; i < list.size(); i++) {
@@ -65,8 +69,7 @@ public class MyFrame extends JFrame{
 			jp.add(tabJ);
 			jp.add(new JButton("bouton"), BorderLayout.EAST);
 			
-			panelListTache.add(jp);
-			
+			panelListTache.add(jp);			
 		}
 		
 	}
@@ -124,8 +127,8 @@ public class MyFrame extends JFrame{
 //			e.printStackTrace();
 //		}
 	
-		cA.printCategorie();
-		cA.printTache();
+//		cA.printCategorie();
+//		cA.printTache();
 		
 		MyFrame f = new MyFrame(cA);
 		f.setVisible(true);
