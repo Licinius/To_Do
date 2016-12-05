@@ -2,6 +2,10 @@ package view_To_Do;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.FlowLayout;
+import java.awt.GridBagLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
@@ -15,7 +19,9 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.border.LineBorder;
+import javax.swing.event.MenuListener;
 
 import controller_To_Do.ControllerApplication;
 import model_To_Do.Tache;
@@ -25,19 +31,31 @@ public class MyFrame extends JFrame{
 //	private JMenu[] menuHorizontal = new JMenu[2];
 	private ControllerApplication controller;
 	private ArrayList<JPanel> panelListTache = new ArrayList<JPanel>();
-	
+	private JScrollPane scroll = new JScrollPane();
+	private JButton[] tabButtonMenu = new JButton[3];
 	
 	public MyFrame(ControllerApplication cA){
 		//this.matriceTree = matriceTree;
-		setSize(800, 800); 
+		setSize(800, 800);
+		setResizable(false);
 		setTitle("Ma liste"); 
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
 		JMenuBar jmb = new JMenuBar();
-		jmb.add(new JMenu("Créer tâche"));jmb.add(new JMenu("Créer catégorie"));jmb.add(new JMenu("Modifier catégorie"));
-		setJMenuBar(jmb);
+		jmb.setLayout(new GridLayout());
+		tabButtonMenu[0] = new JButton("Créer tâche");
+		tabButtonMenu[0].addActionListener(new creerTacheListener());
 		
+		tabButtonMenu[1] = new JButton("Créer catégorie");
+		
+		tabButtonMenu[2] = new JButton("Modifier catégorie");
+
+		for (int i = 0; i < tabButtonMenu.length; i++) {
+			jmb.add("North",tabButtonMenu[i]);
+		}
+		setJMenuBar(jmb);
+		add(scroll);
 		controller = cA;
 		printTacheMieux(controller.getListTache());
 		for (int i = 0; i < panelListTache.size(); i++) {
@@ -84,6 +102,13 @@ public class MyFrame extends JFrame{
 	class JButtonListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 		}
+	}
+	class creerTacheListener implements ActionListener{
+
+		public void actionPerformed(ActionEvent e) {
+			TacheDialog t = new TacheDialog(null,"Créer une nouvelle tache",true);		
+		}
+		
 	}
 	public static void main(String[] args) {
 			
