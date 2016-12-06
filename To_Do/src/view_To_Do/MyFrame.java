@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
 
+import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -31,13 +32,12 @@ public class MyFrame extends JFrame{
 //	private JMenu[] menuHorizontal = new JMenu[2];
 	private ControllerApplication controller;
 	private JPanel panelTache = new JPanel();
-	private JScrollPane scroll = new JScrollPane();
+	private JScrollPane scroll ;
 	private JButton[] tabButtonMenu = new JButton[3];
 	
 	public MyFrame(){
 		//this.matriceTree = matriceTree;
-		setSize(800, 800);
-		setResizable(false);
+		setSize(800, 100);
 		setTitle("Ma liste"); 
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -55,17 +55,17 @@ public class MyFrame extends JFrame{
 			jmb.add("North",tabButtonMenu[i]);
 		}
 		setJMenuBar(jmb);
-		panelTache.add(scroll);
 		try {
 			controller = new ControllerApplication(this);
 		} catch (ClassNotFoundException | IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		panelTache.setSize(50, 800);
-		add(panelTache,"North");
+		panelTache.setSize(800,4600);
+		add(panelTache,"Center");
 		printTache(controller.getListTache());
-		
+		scroll = new JScrollPane(panelTache);
+		this.add(scroll,"East");
 
 	}
 	
@@ -73,20 +73,19 @@ public class MyFrame extends JFrame{
 	
 	public void printTache(ArrayList<Tache> list) {
 		panelTache.removeAll();
+		panelTache.setLayout(new GridLayout(list.size(),2,50,50));
 		for (int i = 0; i < list.size(); i++) {
 			JPanel jp = new JPanel();
-			jp.setLayout(new BorderLayout());
-			jp.setSize(800, 100);
 			String str = list.get(i).toStringPourTesterPourLesJLabels().replaceAll("\t", "    ");;
 			JLabel tabJ = new JLabel(str);
-			tabJ.setBorder(new LineBorder(Color.BLACK));
+			jp.setBorder(new LineBorder(Color.BLACK));
 			jp.add(tabJ);
 			SuppressionBouton spB = new SuppressionBouton(list.get(i));
 			spB.addActionListener(new supprimerTacheListener());
 			jp.add(spB, BorderLayout.EAST);
-			
 			panelTache.add(jp);			
 		}
+
 		this.repaint();
 		this.revalidate();
 	}
