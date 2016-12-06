@@ -30,11 +30,11 @@ public class MyFrame extends JFrame{
 	
 //	private JMenu[] menuHorizontal = new JMenu[2];
 	private ControllerApplication controller;
-	private ArrayList<JPanel> panelListTache = new ArrayList<JPanel>();
+	private JPanel panelTache = new JPanel();
 	private JScrollPane scroll = new JScrollPane();
 	private JButton[] tabButtonMenu = new JButton[3];
 	
-	public MyFrame(ControllerApplication cA){
+	public MyFrame(){
 		//this.matriceTree = matriceTree;
 		setSize(800, 800);
 		setResizable(false);
@@ -55,28 +55,24 @@ public class MyFrame extends JFrame{
 			jmb.add("North",tabButtonMenu[i]);
 		}
 		setJMenuBar(jmb);
-		add(scroll);
-		controller = cA;
-		printTacheMieux(controller.getListTache());
-		for (int i = 0; i < panelListTache.size(); i++) {
-			add(panelListTache.get(i));
+		panelTache.add(scroll);
+		try {
+			controller = new ControllerApplication(this);
+		} catch (ClassNotFoundException | IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
+		panelTache.setSize(50, 800);
+		add(panelTache,"North");
+		printTache(controller.getListTache());
 		
 
 	}
 	
-//	public void printTache(ArrayList<Tache> list) {
-//		String str;
-//		for (int i = 0; i < list.size(); i++) {
-//			str = list.get(i).toStringPourTesterPourLesJLabels().replaceAll("\t", "    ");;
-//			JLabel tabJ = new JLabel(str);
-//			tabJ.setBorder(new LineBorder(Color.BLACK));
-//			panelListTache.add(tabJ);
-//		}
-//
-//	}
+
 	
-	public void printTacheMieux(ArrayList<Tache> list) {
+	public void printTache(ArrayList<Tache> list) {
+		panelTache.removeAll();
 		for (int i = 0; i < list.size(); i++) {
 			JPanel jp = new JPanel();
 			jp.setLayout(new BorderLayout());
@@ -85,11 +81,14 @@ public class MyFrame extends JFrame{
 			JLabel tabJ = new JLabel(str);
 			tabJ.setBorder(new LineBorder(Color.BLACK));
 			jp.add(tabJ);
-			jp.add(new JButton("bouton"), BorderLayout.EAST);
+			SuppressionBouton spB = new SuppressionBouton(list.get(i));
+			spB.addActionListener(new supprimerTacheListener());
+			jp.add(spB, BorderLayout.EAST);
 			
-			panelListTache.add(jp);			
+			panelTache.add(jp);			
 		}
-		
+		this.repaint();
+		this.revalidate();
 	}
 
 	class JMenuListener implements ActionListener{
@@ -107,18 +106,28 @@ public class MyFrame extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 			TacheDialog t = new TacheDialog(null,"Créer une nouvelle tache",true);		
-			 Tache tacheInfo = t.showTacheDialog(); 
+			Tache tacheInfo = t.showTacheDialog(); 
+		}
+		
+	}
+	
+	class supprimerTacheListener implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			SuppressionBouton bouton= (SuppressionBouton)e.getSource();
+			try {
+				controller.deleteTache(bouton.getTache());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			printTache(controller.getListTache());
 		}
 		
 	}
 	public static void main(String[] args) {
 			
-		ControllerApplication cA = null;
-		try {
-			cA = new ControllerApplication();
-		} catch (ClassNotFoundException | IOException e) {
-			e.printStackTrace();
-		}
+		MyFrame f = new MyFrame();
+		f.setVisible(true);
+
 //		Categorie cat = new Categorie("Personnel");
 //		Categorie cat2 = new Categorie("Professionnel");
 //		Calendar date = new GregorianCalendar(2016, 11, 12); //YYYY MM-1 DD
@@ -156,7 +165,6 @@ public class MyFrame extends JFrame{
 //		cA.printCategorie();
 //		cA.printTache();
 		
-		MyFrame f = new MyFrame(cA);
-		f.setVisible(true);
+
 	}
 }

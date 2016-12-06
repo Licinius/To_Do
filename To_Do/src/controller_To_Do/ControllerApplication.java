@@ -12,12 +12,13 @@ import java.util.Collections;
 
 import model_To_Do.Categorie;
 import model_To_Do.Tache;
+import view_To_Do.MyFrame;
 
 public class ControllerApplication {
 	private ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
 	private ArrayList<Tache> listTache = new ArrayList<Tache>();
-
-	public ControllerApplication() throws IOException, ClassNotFoundException{
+	private MyFrame view;
+	public ControllerApplication(MyFrame v) throws IOException, ClassNotFoundException{
 		//Lecture des categories
 		File fichierIn =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
 		FileInputStream fichierInStream = new FileInputStream(fichierIn);
@@ -41,7 +42,7 @@ public class ControllerApplication {
 			}
 			ois.close();
 		}
-
+		view = v;
 
 	}
 	/**
