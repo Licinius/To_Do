@@ -107,6 +107,7 @@ public class MyFrame extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 			TacheDialog t = new TacheDialog(null,"Créer une nouvelle tache",true);		
+			 Tache tacheInfo = t.showTacheDialog(); 
 		}
 		
 	}
