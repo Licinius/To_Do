@@ -84,6 +84,46 @@ public abstract class Tache implements Serializable {
 		this.categorie = categorie;
 	}
 
+	public String getNom() {
+		return nom;
+	}
+
+	public void setNom(String nom) {
+		this.nom = nom;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public Calendar getEcheance() {
+		return echeance;
+	}
+
+	public void setEcheance(Calendar echeance) {
+		this.echeance = echeance;
+	}
+
+	public static int getCompteur() {
+		return compteur;
+	}
+
+	public static void setCompteur(int compteur) {
+		Tache.compteur = compteur;
+	}
+
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -131,6 +171,5 @@ public abstract class Tache implements Serializable {
 	public boolean equals(Tache t){
 		return t.id == this.id;
 	}
-
 
 }

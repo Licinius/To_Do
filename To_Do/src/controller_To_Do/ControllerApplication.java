@@ -272,6 +272,20 @@ public class ControllerApplication {
 			updateTache();
 		}
 	}
+	
+	public void modifierTache(Tache tacheInfo) throws IOException {
+		if(tacheInfo !=null){
+			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+			ObjectOutputStream oos=null;
+			oos = new ObjectOutputStream(fichierOutStream);
+			for(Tache tache : this.listTache){
+				oos.writeObject(tache);
+			}
+			oos.close();
+			updateTache();
+		}
+	}
 
 
 }
