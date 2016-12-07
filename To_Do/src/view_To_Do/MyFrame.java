@@ -159,13 +159,12 @@ public class MyFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			SupprimerCategorieDialog c = new SupprimerCategorieDialog(mf," Supprimer categorie",true);		
 			int idCat= c.showModifDialog();
-//			try {
-//				controller.modifierCategorie(catInfo);
-//			} catch (IOException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
-			//printTache();
+			try {
+				controller.deleteCategorie(idCat);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			printTache();
 		}
 		
 	}

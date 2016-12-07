@@ -156,20 +156,22 @@ public class ControllerApplication {
 	}
 
 	public void deleteTache(int id) throws IOException{
-		for (int i = 0; i < listCategorie.size(); i++) {
-			if (listTache.get(i).getId() == id) {
-				listTache.remove(listTache.get(i));
-				break;
+		if(id>=0){
+			for (int i = 0; i < listCategorie.size(); i++) {
+				if (listTache.get(i).getId() == id) {
+					listTache.remove(listTache.get(i));
+					break;
+				}
 			}
+			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
+			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+			ObjectOutputStream oos=null;
+			oos = new ObjectOutputStream(fichierOutStream);
+			for(Tache t : this.listTache){
+				oos.writeObject(t);
+			}
+			oos.close();
 		}
-		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
-		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-		ObjectOutputStream oos=null;
-		oos = new ObjectOutputStream(fichierOutStream);
-		for(Tache t : this.listTache){
-			oos.writeObject(t);
-		}
-		oos.close();
 	}
 
 

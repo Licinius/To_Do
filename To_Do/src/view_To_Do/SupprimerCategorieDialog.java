@@ -20,7 +20,7 @@ import model_To_Do.Categorie;
 
 public class SupprimerCategorieDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
-	private int identifiantCategorie;
+	private int identifiantCategorie = -1;
 	private  JTextField nom;
 	private MyFrame owner;
 
@@ -66,7 +66,8 @@ public class SupprimerCategorieDialog extends JDialog {
 		JButton okBouton = new JButton("OK");
 
 		okBouton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {				
+			public void actionPerformed(ActionEvent arg0) {	
+				identifiantCategorie = owner.getController().getListCategorie().get(combo.getSelectedIndex()).getIdentifiant();
 				setVisible(false);
 				
 			}
