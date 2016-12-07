@@ -254,12 +254,6 @@ public class ControllerApplication {
 	}
 	public void modifierCategorie(Categorie catInfo) throws IOException {
 		if(catInfo !=null){
-			for (int i = 0; i < listCategorie.size(); i++) {
-				if (listCategorie.get(i).getIdentifiant() == catInfo.getIdentifiant()) {
-					listCategorie.get(i).setNom(catInfo.getNom());
-					break;
-				}
-			}
 			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
 			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
 			ObjectOutputStream oos=null;

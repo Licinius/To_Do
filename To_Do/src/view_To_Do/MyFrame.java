@@ -2,9 +2,6 @@ package view_To_Do;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,14 +12,9 @@ import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
-import javax.swing.border.LineBorder;
-import javax.swing.event.MenuListener;
 
 import controller_To_Do.ControllerApplication;
 import model_To_Do.Categorie;
@@ -35,7 +27,7 @@ public class MyFrame extends JFrame{
 	private ControllerApplication controller;
 	private JPanel panelTache = new JPanel();
 	private JScrollPane scroll ;
-	private JButton[] tabButtonMenu = new JButton[3];
+	private JButton[] tabButtonMenu = new JButton[4];
 	
 	public MyFrame(){
 		//this.matriceTree = matriceTree;
@@ -52,6 +44,8 @@ public class MyFrame extends JFrame{
 		tabButtonMenu[1].addActionListener(new creerCategorieListener());
 		tabButtonMenu[2] = new JButton("Modifier catégorie");
 		tabButtonMenu[2].addActionListener(new ModifCatListener(this));
+		tabButtonMenu[3]=new JButton("Supprimer catégorie");
+		tabButtonMenu[3].addActionListener(new SupprimerCategorie(this));
 
 		for (int i = 0; i < tabButtonMenu.length; i++) {
 			jmb.add("North",tabButtonMenu[i]);
@@ -141,7 +135,7 @@ public class MyFrame extends JFrame{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			ModifCategorieDialog c = new ModifCategorieDialog(mf,"Créer une nouvelle tache",true);		
+			ModifCategorieDialog c = new ModifCategorieDialog(mf,"Modifier nom categorie",true);		
 			Categorie catInfo = c.showModifDialog();
 			try {
 				controller.modifierCategorie(catInfo);
@@ -153,7 +147,28 @@ public class MyFrame extends JFrame{
 		}
 		
 	}
-	
+
+	class SupprimerCategorie implements ActionListener{
+
+		private MyFrame mf;
+			
+		public SupprimerCategorie(MyFrame myFrame) {
+			mf = myFrame;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			SupprimerCategorieDialog c = new SupprimerCategorieDialog(mf," Supprimer categorie",true);		
+			int idCat= c.showModifDialog();
+//			try {
+//				controller.modifierCategorie(catInfo);
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+			//printTache();
+		}
+		
+	}
 	class terminerBoutonTache implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			BoutonTache bouton= (BoutonTache)e.getSource();
@@ -165,6 +180,7 @@ public class MyFrame extends JFrame{
 			printTache();
 		}
 	}
+	
 	class augmenterGranularite implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			BoutonTache bouton= (BoutonTache)e.getSource();
