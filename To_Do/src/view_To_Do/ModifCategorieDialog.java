@@ -3,7 +3,6 @@ package view_To_Do;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -79,9 +78,13 @@ public class ModifCategorieDialog extends JDialog {
 
 		okBouton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				info = owner.getController().getListCategorie().get(combo.getSelectedIndex());
-				info.setNom(nom.getText());
-				setVisible(false);
+				if (!nom.getText().trim().isEmpty()) {
+					info = owner.getController().getListCategorie().get(combo.getSelectedIndex());
+					info.setNom(nom.getText());
+					setVisible(false);
+				} else {
+					setVisible(false);
+				}
 			}
 		});
 
