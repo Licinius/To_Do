@@ -13,9 +13,9 @@ public class TacheLongCours extends Tache {
 	private static final long serialVersionUID = 3081649104084734383L;
 	private int granularite;
 
-	public TacheLongCours(String nom, String description, Calendar echeance, Categorie categorie, int granularite) throws ExceptionTacheAnterieur{
+	public TacheLongCours(String nom, String description, Calendar echeance, Categorie categorie) throws ExceptionTacheAnterieur{
 		super(nom, description, echeance, categorie);
-		this.granularite = granularite;
+		this.granularite = 0;
 	}
 
 	public TacheLongCours(int id, String nom, Calendar echeance, int granularite) throws ExceptionTacheAnterieur{

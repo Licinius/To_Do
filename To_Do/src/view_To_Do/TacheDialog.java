@@ -5,23 +5,28 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
-
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
-import javax.swing.JScrollPane;
 import javax.swing.JTextField;
-
+import javax.swing.text.MaskFormatter;
+import exception_To_Do.ExceptionTacheAnterieur;
 import model_To_Do.Categorie;
 import model_To_Do.Tache;
+import model_To_Do.TacheLongCours;
+import model_To_Do.TachePonctuelle;
 
 public class TacheDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
@@ -29,7 +34,7 @@ public class TacheDialog extends JDialog {
 	private MyFrame owner;
 	private boolean sendData;
 	private JTextField nom;
-	private JTextField echeance;
+	private JFormattedTextField echeance;
 	private JTextField description;
 
 
@@ -50,8 +55,6 @@ public class TacheDialog extends JDialog {
 	}
 
 	private void initComponent(){
-		;
-
 		JPanel comb = new JPanel();
 		ButtonGroup bg = new ButtonGroup();
 		JRadioButton jr1 = new JRadioButton("Normale");
@@ -74,7 +77,16 @@ public class TacheDialog extends JDialog {
 		panNom.add(nom);
 
 		JPanel panEcheance = new JPanel();
-		echeance = new JTextField();
+		echeance = new JFormattedTextField();
+	    MaskFormatter dateMask;
+		try {
+			dateMask = new MaskFormatter("##/##/####");
+			dateMask.install(echeance);
+		} catch (ParseException e) {
+			System.err.println("Une erreur c'est produite lors de la création du champs date");
+			e.printStackTrace();
+		}
+	           
 		echeance.setPreferredSize(new Dimension(100, 25));
 		panEcheance.setPreferredSize(new Dimension(220, 20));
 		panEcheance.setBorder(BorderFactory.createTitledBorder("Echeance de la tache"));
@@ -90,7 +102,7 @@ public class TacheDialog extends JDialog {
 		for (int i = 0; i < listCat.size(); i++) {
 			tab[i] = listCat.get(i).getNom();
 		}
-		JComboBox combo = new JComboBox(tab);
+		JComboBox<String> combo = new JComboBox<String>(tab);
 		combo.setPreferredSize(new Dimension(100, 20));
 		panCat.add(combo);
 
@@ -116,17 +128,83 @@ public class TacheDialog extends JDialog {
 		JButton okBouton = new JButton("OK");
 
 		okBouton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {   
-				setVisible(false);
+			public void actionPerformed(ActionEvent arg0) {
+				if(!nom.getText().trim().isEmpty() && !description.getText().trim().isEmpty() && echeance.isEditValid()){
+					description.setBackground(Color.WHITE);
+					nom.setBackground(Color.WHITE);
+					echeance.setBackground(Color.WHITE);
+					String stringValues[] = echeance.getText().split("/");
+					int values[] = new int[stringValues.length];
+					boolean formatValid=true;
+					for (int i = 0; i < values.length; i++) {
+						if(!stringValues[i].trim().isEmpty()){
+							System.out.println("La " + stringValues[i]);
+							values[i] = Integer.parseInt(stringValues[i].trim());
+							System.out.println("Done");
+						}else{
+							formatValid = false;
+						}
+					}
+					if(values[0]<13 && values[1]<13 && values[2]>1970 && formatValid){
+						Categorie cat = owner.getController().getListCategorie().get(combo.getSelectedIndex());
+						Calendar date = new GregorianCalendar(values[2], values[1]-1, values[0]);//YYYY MM-1 DD
+						if(date.after(Calendar.getInstance())){
+							if(getType().equals("Normale")){
+								try {
+									info = new TachePonctuelle(nom.getText(),description.getText(),date,cat);
+								} catch (ExceptionTacheAnterieur e) {
+									e.printStackTrace();
+								}
+							}else{
+								try {
+									info = new TacheLongCours(nom.getText(),description.getText(),date,cat);
+								} catch (ExceptionTacheAnterieur e) {
+									e.printStackTrace();
+								}
+							}
+						}
+						else{
+							JOptionPane.showMessageDialog(null, "La date indiqué doit être après la date d'aujourd'hui", "Attention ! ", JOptionPane.ERROR_MESSAGE);            
+						}
+					}else{
+						echeance.setBackground(Color.PINK);
+					}
+				}else{
+					if(nom.getText().trim().isEmpty()){
+						nom.setText("");
+						nom.setBackground(Color.PINK);
+					}else{
+						nom.setBackground(Color.WHITE);
+					}
+					if(description.getText().trim().isEmpty()){
+						description.setText("");
+						description.setBackground(Color.PINK);
+					}else{
+						description.setBackground(Color.WHITE);
+					}
+					if(!echeance.isEditValid()){
+						echeance.setText("");
+						echeance.setBackground(Color.PINK);
+					}else{
+						echeance.setBackground(Color.WHITE);
+					}
+				}
+				//setVisible(false);
 			}
-		}      
-				);
+		    public String getType(){
+		        return (jr1.isSelected()) ? jr1.getText() : 
+		                 (jr2.isSelected()) ? jr2.getText() : 
+		                  jr1.getText();  
+		      }
+		});
 
 		JButton cancelBouton = new JButton("Annuler");
 		cancelBouton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				setVisible(false);
-			}      
+			}     
+
+			
 		});
 
 		control.add(okBouton);
