@@ -51,6 +51,7 @@ public class MyFrame extends JFrame{
 		tabButtonMenu[1] = new JButton("Créer catégorie");
 		tabButtonMenu[1].addActionListener(new creerCategorieListener());
 		tabButtonMenu[2] = new JButton("Modifier catégorie");
+		tabButtonMenu[2].addActionListener(new ModifCatListener(this));
 
 		for (int i = 0; i < tabButtonMenu.length; i++) {
 			jmb.add("North",tabButtonMenu[i]);
@@ -130,6 +131,22 @@ public class MyFrame extends JFrame{
 		}
 		
 	}
+	
+	class ModifCatListener implements ActionListener{
+
+		private MyFrame mf;
+			
+		public ModifCatListener(MyFrame myFrame) {
+			mf = myFrame;
+		}
+
+		public void actionPerformed(ActionEvent e) {
+			ModifCategorieDialog t = new ModifCategorieDialog(mf,"Créer une nouvelle tache",true);		
+			Categorie tacheInfo = t.showModifDialog();
+		}
+		
+	}
+	
 	class terminerBoutonTache implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			BoutonTache bouton= (BoutonTache)e.getSource();
