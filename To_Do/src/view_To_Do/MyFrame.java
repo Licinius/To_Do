@@ -143,7 +143,6 @@ public class MyFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			ModifCategorieDialog c = new ModifCategorieDialog(mf,"Créer une nouvelle tache",true);		
 			Categorie catInfo = c.showModifDialog();
-			System.out.println(catInfo);
 			try {
 				controller.modifierCategorie(catInfo);
 			} catch (IOException e1) {
