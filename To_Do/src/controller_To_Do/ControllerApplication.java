@@ -206,6 +206,10 @@ public class ControllerApplication {
 	public ArrayList<Tache> getListTache() {
 		return listTache;
 	}
+	
+	public ArrayList<Categorie> getListCategorie() {
+		return listCategorie;
+	}
 
 
 }

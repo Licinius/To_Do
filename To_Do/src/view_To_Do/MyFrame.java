@@ -25,6 +25,7 @@ import javax.swing.border.LineBorder;
 import javax.swing.event.MenuListener;
 
 import controller_To_Do.ControllerApplication;
+import model_To_Do.Categorie;
 import model_To_Do.Tache;
 
 public class MyFrame extends JFrame{
@@ -37,7 +38,7 @@ public class MyFrame extends JFrame{
 	
 	public MyFrame(){
 		//this.matriceTree = matriceTree;
-		setSize(800, 100);
+		setSize(800, 600);
 		setTitle("Ma liste"); 
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -45,9 +46,10 @@ public class MyFrame extends JFrame{
 		JMenuBar jmb = new JMenuBar();
 		jmb.setLayout(new GridLayout());
 		tabButtonMenu[0] = new JButton("Créer tâche");
-		tabButtonMenu[0].addActionListener(new creerTacheListener());
+		tabButtonMenu[0].addActionListener(new creerTacheListener(this));
 		
 		tabButtonMenu[1] = new JButton("Créer catégorie");
+		tabButtonMenu[1].addActionListener(new creerCategorieListener());
 		
 		tabButtonMenu[2] = new JButton("Modifier catégorie");
 
@@ -69,7 +71,9 @@ public class MyFrame extends JFrame{
 
 	}
 	
-
+	public ControllerApplication getController() {
+		return controller;
+	}
 	
 	public void printTache(ArrayList<Tache> list) {
 		panelTache.removeAll();
@@ -102,8 +106,14 @@ public class MyFrame extends JFrame{
 	}
 	class creerTacheListener implements ActionListener{
 
+		private MyFrame mf;
+			
+		public creerTacheListener(MyFrame myFrame) {
+			mf = myFrame;
+		}
+
 		public void actionPerformed(ActionEvent e) {
-			TacheDialog t = new TacheDialog(null,"Créer une nouvelle tache",true);		
+			TacheDialog t = new TacheDialog(mf,"Créer une nouvelle tache",true);		
 			Tache tacheInfo = t.showTacheDialog(); 
 		}
 		
@@ -118,6 +128,14 @@ public class MyFrame extends JFrame{
 				e1.printStackTrace();
 			}
 			printTache(controller.getListTache());
+		}
+		
+	}
+	class creerCategorieListener implements ActionListener{
+
+		public void actionPerformed(ActionEvent e) {
+			CategorieDialog t = new CategorieDialog(null,"Créer une nouvelle catégorie",true);		
+			Categorie categorieInfo = t.showTacheDialog(); 
 		}
 		
 	}
