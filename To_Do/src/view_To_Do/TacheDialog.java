@@ -155,6 +155,7 @@ public class TacheDialog extends JDialog {
 							}else{
 								try {
 									info = new TacheLongCours(nom.getText(),description.getText(),date,cat);
+									setVisible(false);
 								} catch (ExceptionTacheAnterieur e) {
 									e.printStackTrace();
 								}
