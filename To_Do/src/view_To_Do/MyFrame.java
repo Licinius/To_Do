@@ -64,7 +64,7 @@ public class MyFrame extends JFrame{
 		panelTache.setSize(800,4600);
 		add(panelTache,"Center");
 		printTache(controller.getListTache());
-		scroll = new JScrollPane(panelTache);
+		scroll = new JScrollPane(panelTache,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(scroll,"East");
 
 	}
@@ -75,14 +75,13 @@ public class MyFrame extends JFrame{
 		panelTache.removeAll();
 		panelTache.setLayout(new GridLayout(list.size(),2,50,50));
 		for (int i = 0; i < list.size(); i++) {
-			JPanel jp = new JPanel();
-			String str = list.get(i).toStringPourTesterPourLesJLabels().replaceAll("\t", "    ");;
-			JLabel tabJ = new JLabel(str);
-			jp.setBorder(new LineBorder(Color.BLACK));
-			jp.add(tabJ);
+			JPanel east = new JPanel();
+			east.setLayout(new GridLayout(2,0));
+			PanelTache jp = new PanelTache(list.get(i));
 			SuppressionBouton spB = new SuppressionBouton(list.get(i));
 			spB.addActionListener(new supprimerTacheListener());
-			jp.add(spB, BorderLayout.EAST);
+			east.add(spB);
+			jp.add(east,BorderLayout.LINE_END);
 			panelTache.add(jp);			
 		}
 

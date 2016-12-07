@@ -4,7 +4,12 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.TreeMap;
 
 import exception_To_Do.ExceptionTacheAnterieur;
 
@@ -86,13 +91,13 @@ public abstract class Tache implements Serializable {
 		return affichage;
 	}
 	
-	public String[] getInformation() { //recupère les informations pour les affichés au bon endroit
+	public Map <String,String> getInformation() { //recupère les informations pour les affichés au bon endroit
 		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
-		String[] str = new String[4];
-		str[0] = this.nom;
-		str[1] = this.description;
-		str[2] = format1.format(echeance.getTime());
-		str[3] = this.categorie == null ? "Sans Catégorie" : categorie.getNom();;
+		Map<String,String> str = new LinkedHashMap<String,String>(); //LinkedHashMap sinon les maps en général font des tries
+		str.put("Nom", this.nom);
+		str.put("Echeance",format1.format(echeance.getTime()));
+		str.put("Categorie",this.categorie == null ? "Sans Catégorie" : categorie.getNom());
+		str.put("Description",this.description);
 		return str;
 	}
 	
