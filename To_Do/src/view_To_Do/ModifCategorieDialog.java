@@ -80,7 +80,6 @@ public class ModifCategorieDialog extends JDialog {
 		okBouton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
 				info = owner.getController().getListCategorie().get(combo.getSelectedIndex());
-				System.out.println(info);
 				setVisible(false);
 			}
 		});
