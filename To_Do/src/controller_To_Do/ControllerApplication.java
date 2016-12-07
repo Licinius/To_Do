@@ -275,7 +275,7 @@ public class ControllerApplication {
 	
 	public void modifierTache(Tache tacheInfo) throws IOException {
 		if(tacheInfo !=null){
-			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
 			ObjectOutputStream oos=null;
 			oos = new ObjectOutputStream(fichierOutStream);

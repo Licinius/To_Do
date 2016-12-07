@@ -130,7 +130,6 @@ public class TacheDialog extends JDialog {
 				if(!nom.getText().trim().isEmpty() && !description.getText().trim().isEmpty() && echeance.isEditValid()){
 					description.setBackground(Color.WHITE);
 					nom.setBackground(Color.WHITE);
-					echeance.setBackground(Color.WHITE);
 					String stringValues[] = echeance.getText().split("/");
 					int values[] = new int[stringValues.length];
 					boolean formatValid=true;
@@ -142,6 +141,7 @@ public class TacheDialog extends JDialog {
 						}
 					}
 					if(values[0]<31 && values[1]<13 && values[2]>1970 && formatValid){
+						echeance.setBackground(Color.WHITE);
 						Categorie cat = owner.getController().getListCategorie().get(combo.getSelectedIndex());
 						Calendar date = new GregorianCalendar(values[2], values[1]-1, values[0]);//YYYY MM-1 DD
 						if(date.after(Calendar.getInstance())){

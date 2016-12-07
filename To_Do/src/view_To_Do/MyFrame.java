@@ -31,7 +31,7 @@ public class MyFrame extends JFrame{
 
 	public MyFrame(){
 		//this.matriceTree = matriceTree;
-		setSize(800, 600);
+		setSize(900, 600);
 		setTitle("Ma liste"); 
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -54,10 +54,9 @@ public class MyFrame extends JFrame{
 		try {
 			controller = new ControllerApplication(this);
 		} catch (ClassNotFoundException | IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		panelTache.setSize(800,4600);
+		panelTache.setSize(900,4600);
 		add(panelTache,"Center");
 		printTache();
 		scroll = new JScrollPane(panelTache,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
@@ -75,7 +74,7 @@ public class MyFrame extends JFrame{
 		panelTache.setLayout(new GridLayout(list.size(),2,50,50));
 		for (int i = 0; i < list.size(); i++) {
 			JPanel east = new JPanel();
-			east.setLayout(new GridLayout(2,0));
+			east.setLayout(new GridLayout(3,0));
 			PanelTache jp = new PanelTache(list.get(i));
 			if(list.get(i).isRetard())
 				jp.setBorder(BorderFactory.createLineBorder(Color.RED));
@@ -143,7 +142,7 @@ public class MyFrame extends JFrame{
 			ModifTacheDialog t = new ModifTacheDialog(mf,"Créer une nouvelle tache",true, bouton.getTache());		
 			Tache tacheInfo = t.showModifTacheDialog(); 
 			try {
-				controller.modifierTache(bouton.getTache());
+				controller.modifierTache(tacheInfo);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
