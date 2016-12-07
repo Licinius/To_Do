@@ -142,7 +142,12 @@ public class MyFrame extends JFrame{
 
 		public void actionPerformed(ActionEvent e) {
 			CategorieDialog t = new CategorieDialog(null,"Créer une nouvelle catégorie",true);		
-			Categorie categorieInfo = t.showTacheDialog(); 
+			Categorie categorieInfo = t.showTacheDialog();
+			try {
+				controller.createCategorie(categorieInfo);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
 		}
 		
 	}

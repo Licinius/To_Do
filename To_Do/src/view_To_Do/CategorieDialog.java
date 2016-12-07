@@ -57,8 +57,15 @@ public class CategorieDialog extends JDialog {
 		    JButton okBouton = new JButton("OK");
 		    
 		    okBouton.addActionListener(new ActionListener(){
-		      public void actionPerformed(ActionEvent arg0) {        
-		         setVisible(false);
+		      public void actionPerformed(ActionEvent arg0) {
+		    	  if(!nom.getText().trim().isEmpty()){
+		    		  info = new Categorie(nom.getText());
+		    		  setVisible(false);
+		    	  }
+		    	  else{
+		    		  nom.setBackground(Color.PINK);
+		    	  }
+		        
 		      }
 		      }      
 		    );
