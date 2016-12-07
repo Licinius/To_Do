@@ -65,7 +65,7 @@ public class MyFrame extends JFrame{
 		}
 		panelTache.setSize(800,4600);
 		add(panelTache,"Center");
-		printTache(controller.getListTache());
+		printTache();
 		scroll = new JScrollPane(panelTache,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(scroll,"East");
 
@@ -75,7 +75,8 @@ public class MyFrame extends JFrame{
 		return controller;
 	}
 	
-	public void printTache(ArrayList<Tache> list) {
+	public void printTache() {
+		ArrayList<Tache> list = controller.getListTache();
 		panelTache.removeAll();
 		panelTache.setLayout(new GridLayout(list.size(),2,50,50));
 		for (int i = 0; i < list.size(); i++) {
@@ -115,6 +116,12 @@ public class MyFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			TacheDialog t = new TacheDialog(mf,"Créer une nouvelle tache",true);		
 			Tache tacheInfo = t.showTacheDialog(); 
+			try {
+				controller.createTache(tacheInfo);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			printTache();
 		}
 		
 	}
@@ -127,7 +134,7 @@ public class MyFrame extends JFrame{
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
-			printTache(controller.getListTache());
+			printTache();
 		}
 		
 	}

@@ -138,9 +138,7 @@ public class TacheDialog extends JDialog {
 					boolean formatValid=true;
 					for (int i = 0; i < values.length; i++) {
 						if(!stringValues[i].trim().isEmpty()){
-							System.out.println("La " + stringValues[i]);
 							values[i] = Integer.parseInt(stringValues[i].trim());
-							System.out.println("Done");
 						}else{
 							formatValid = false;
 						}
@@ -152,6 +150,7 @@ public class TacheDialog extends JDialog {
 							if(getType().equals("Normale")){
 								try {
 									info = new TachePonctuelle(nom.getText(),description.getText(),date,cat);
+									setVisible(false);
 								} catch (ExceptionTacheAnterieur e) {
 									e.printStackTrace();
 								}
@@ -189,7 +188,6 @@ public class TacheDialog extends JDialog {
 						echeance.setBackground(Color.WHITE);
 					}
 				}
-				//setVisible(false);
 			}
 		    public String getType(){
 		        return (jr1.isSelected()) ? jr1.getText() : 
