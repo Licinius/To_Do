@@ -28,6 +28,16 @@ public class TacheLongCours extends Tache {
 		this.granularite = ois.readInt();
 	}
 	
+	public int getGranularite() {
+		return granularite;
+	}
+
+	public void setGranularite(int granularite) {
+		if(granularite ==100)
+			super.setTermine(true);
+		this.granularite = granularite;
+	}
+
 	protected void writeObject(ObjectOutputStream oos) throws IOException{
 		super.writeObject(oos);
 		oos.writeInt(this.granularite);

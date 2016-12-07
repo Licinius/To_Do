@@ -21,7 +21,6 @@ public class PanelTache extends JPanel {
 	public PanelTache(Tache t){
 		this.t =  t;
 		this.setLayout(new BorderLayout());
-		this.setBorder(BorderFactory.createLineBorder(Color.black));
 		this.setMaximumSize(new Dimension(800,200));
 		initCompo();
 	}

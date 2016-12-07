@@ -20,6 +20,9 @@ public abstract class Tache implements Serializable {
 	private String description;
 	private Calendar echeance;
 	private Categorie categorie;
+	private boolean retard;
+	private boolean termine;
+	
 	private static int compteur = 0;
 
 	public Tache(String nom, String description, Calendar echeance, Categorie categorie) throws ExceptionTacheAnterieur{
@@ -27,6 +30,8 @@ public abstract class Tache implements Serializable {
 		this.nom = nom;
 		this.description = description;
 		this.categorie = categorie;
+		this.retard = false;
+		this.termine = false;
 		if (echeance.after(Calendar.getInstance()))	this.echeance = echeance;
 		else	throw new ExceptionTacheAnterieur(echeance.toString());
 		
@@ -37,6 +42,8 @@ public abstract class Tache implements Serializable {
 		this.nom = nom;
 		this.description = "";
 		this.categorie = null;
+		this.retard = false;
+		this.termine = false;
 		if (echeance.after(Calendar.getInstance()))	this.echeance = echeance;
 		else	throw new ExceptionTacheAnterieur(echeance.toString());
 	}
@@ -54,6 +61,8 @@ public abstract class Tache implements Serializable {
 		this.nom = ois.readUTF();
 		this.echeance = (Calendar)ois.readObject();
 		this.categorie=(Categorie)ois.readObject();
+		this.retard = ois.readBoolean();
+		this.termine = ois.readBoolean();
 	}
 	
 	protected void writeObject(ObjectOutputStream oos) throws IOException{
@@ -63,6 +72,8 @@ public abstract class Tache implements Serializable {
 		System.out.println("Je plante là");
 		oos.writeObject(echeance);
 		oos.writeObject(categorie);
+		oos.writeBoolean(termine);
+		oos.writeBoolean(retard);
 	}
 
 	public Categorie getCategorie() {
@@ -91,6 +102,22 @@ public abstract class Tache implements Serializable {
 		return affichage;
 	}
 	
+	public boolean isRetard() {
+		return retard;
+	}
+
+	public void setRetard(boolean retard) {
+		this.retard = retard;
+	}
+
+	public boolean isTermine() {
+		return termine;
+	}
+
+	public void setTermine(boolean termine) {
+		this.termine = termine;
+	}
+
 	public Map <String,String> getInformation() { //recupère les informations pour les affichés au bon endroit
 		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String,String> str = new LinkedHashMap<String,String>(); //LinkedHashMap sinon les maps en général font des tries

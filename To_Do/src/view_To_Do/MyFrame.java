@@ -27,6 +27,7 @@ import javax.swing.event.MenuListener;
 import controller_To_Do.ControllerApplication;
 import model_To_Do.Categorie;
 import model_To_Do.Tache;
+import model_To_Do.TachePonctuelle;
 
 public class MyFrame extends JFrame{
 	
@@ -47,10 +48,8 @@ public class MyFrame extends JFrame{
 		jmb.setLayout(new GridLayout());
 		tabButtonMenu[0] = new JButton("Créer tâche");
 		tabButtonMenu[0].addActionListener(new creerTacheListener(this));
-		
 		tabButtonMenu[1] = new JButton("Créer catégorie");
 		tabButtonMenu[1].addActionListener(new creerCategorieListener());
-		
 		tabButtonMenu[2] = new JButton("Modifier catégorie");
 
 		for (int i = 0; i < tabButtonMenu.length; i++) {
@@ -83,9 +82,26 @@ public class MyFrame extends JFrame{
 			JPanel east = new JPanel();
 			east.setLayout(new GridLayout(2,0));
 			PanelTache jp = new PanelTache(list.get(i));
-			SuppressionBouton spB = new SuppressionBouton(list.get(i));
+			if(list.get(i).isRetard())
+				jp.setBorder(BorderFactory.createLineBorder(Color.RED));
+			else
+				jp.setBorder(BorderFactory.createLineBorder(Color.BLACK));
+			
+			if(list.get(i).isTermine())
+				jp.setBorder(BorderFactory.createLineBorder(Color.GREEN));
+			
+			BoutonTache spB = new BoutonTache("Supprimer", list.get(i));
 			spB.addActionListener(new supprimerTacheListener());
 			east.add(spB);
+			if(list.get(i) instanceof TachePonctuelle){
+				BoutonTache tB = new BoutonTache("Termine", list.get(i));
+				tB.addActionListener(new terminerBoutonTache());
+				east.add(tB);
+			}else{
+				BoutonTache tB = new BoutonTache("Augmenter granularite", list.get(i));
+				tB.addActionListener(new augmenterGranularite());
+				east.add(tB);
+			}
 			jp.add(east,BorderLayout.LINE_END);
 			panelTache.add(jp);			
 		}
@@ -93,18 +109,7 @@ public class MyFrame extends JFrame{
 		this.repaint();
 		this.revalidate();
 	}
-
-	class JMenuListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-			JMenuItem menuItem= (JMenuItem)e.getSource();
-			
-		}
-	}
 	
-	class JButtonListener implements ActionListener{
-		public void actionPerformed(ActionEvent e) {
-		}
-	}
 	class creerTacheListener implements ActionListener{
 
 		private MyFrame mf;
@@ -125,10 +130,31 @@ public class MyFrame extends JFrame{
 		}
 		
 	}
-	
+	class terminerBoutonTache implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			BoutonTache bouton= (BoutonTache)e.getSource();
+			try {
+				controller.terminerTache(bouton.getTache());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			printTache();
+		}
+	}
+	class augmenterGranularite implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			BoutonTache bouton= (BoutonTache)e.getSource();
+			try {
+				controller.modiferGranularite(bouton.getTache());
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+			printTache();
+		}
+	}
 	class supprimerTacheListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
-			SuppressionBouton bouton= (SuppressionBouton)e.getSource();
+			BoutonTache bouton= (BoutonTache)e.getSource();
 			try {
 				controller.deleteTache(bouton.getTache());
 			} catch (IOException e1) {

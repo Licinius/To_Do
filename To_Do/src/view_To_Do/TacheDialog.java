@@ -47,7 +47,7 @@ public class TacheDialog extends JDialog {
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.initComponent();
 	}
-
+	
 	public Tache showTacheDialog(){
 		this.sendData = false;
 		this.setVisible(true);      
@@ -143,7 +143,7 @@ public class TacheDialog extends JDialog {
 							formatValid = false;
 						}
 					}
-					if(values[0]<13 && values[1]<13 && values[2]>1970 && formatValid){
+					if(values[0]<31 && values[1]<13 && values[2]>1970 && formatValid){
 						Categorie cat = owner.getController().getListCategorie().get(combo.getSelectedIndex());
 						Calendar date = new GregorianCalendar(values[2], values[1]-1, values[0]);//YYYY MM-1 DD
 						if(date.after(Calendar.getInstance())){

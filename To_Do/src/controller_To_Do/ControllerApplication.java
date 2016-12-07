@@ -12,6 +12,7 @@ import java.util.Collections;
 
 import model_To_Do.Categorie;
 import model_To_Do.Tache;
+import model_To_Do.TacheLongCours;
 import view_To_Do.MyFrame;
 
 public class ControllerApplication {
@@ -38,7 +39,9 @@ public class ControllerApplication {
 		if(fichierInStream.available()>0){
 			ois = new ObjectInputStream(fichierInStream);
 			while(fichierInStream.available() > 0){
-				listTache.add((Tache)ois.readObject());
+				Tache tmp = (Tache)ois.readObject();
+				if(!tmp.isTermine())
+					listTache.add(tmp);
 			}
 			ois.close();
 		}
@@ -209,6 +212,45 @@ public class ControllerApplication {
 	
 	public ArrayList<Categorie> getListCategorie() {
 		return listCategorie;
+	}
+	public void terminerTache(Tache tache)throws IOException {
+
+		for (int i = 0; i < listCategorie.size(); i++) {
+			if (listTache.get(i).getId() == tache.getId()) {
+				listTache.get(i).setTermine(true);
+				listTache.remove(listTache.get(i));
+				break;
+			}
+		}
+		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
+		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+		ObjectOutputStream oos=null;
+		oos = new ObjectOutputStream(fichierOutStream);
+		for(Tache t : this.listTache){
+			oos.writeObject(t);
+		}
+		oos.close();
+	}
+	public void modiferGranularite(Tache tache) throws IOException{
+		((TacheLongCours) tache).setGranularite(((TacheLongCours) tache).getGranularite()+5);
+		for (int i = 0; i < listCategorie.size(); i++) {
+			if (listTache.get(i).getId() == tache.getId()) {
+				((TacheLongCours) listTache.get(i)).setGranularite(((TacheLongCours) tache).getGranularite());
+				if(tache.isTermine()){
+					listTache.remove(listTache.get(i));
+				}
+				break;
+			}
+		}
+		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
+		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+		ObjectOutputStream oos=null;
+		oos = new ObjectOutputStream(fichierOutStream);
+		for(Tache t : this.listTache){
+			oos.writeObject(t);
+		}
+		oos.close();
+		
 	}
 
 
