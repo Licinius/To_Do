@@ -141,8 +141,16 @@ public class MyFrame extends JFrame{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			ModifCategorieDialog t = new ModifCategorieDialog(mf,"Créer une nouvelle tache",true);		
-			Categorie tacheInfo = t.showModifDialog();
+			ModifCategorieDialog c = new ModifCategorieDialog(mf,"Créer une nouvelle tache",true);		
+			Categorie catInfo = c.showModifDialog();
+			System.out.println(catInfo);
+			try {
+				controller.modifierCategorie(catInfo);
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			}
+			printTache();
 		}
 		
 	}

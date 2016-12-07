@@ -252,6 +252,29 @@ public class ControllerApplication {
 		oos.close();
 		
 	}
+	public void modifierCategorie(Categorie catInfo) throws IOException {
+		for (int i = 0; i < listCategorie.size(); i++) {
+			if (listCategorie.get(i).getIdentifiant() == catInfo.getIdentifiant()) {
+				listCategorie.get(i).setNom(catInfo.getNom());
+				break;
+			}
+		}
+		File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+		ObjectOutputStream oos=null;
+		oos = new ObjectOutputStream(fichierOutStream);
+		for(Categorie cat : this.listCategorie){
+			oos.writeObject(cat);
+		}
+		oos.close();
+		for(Tache t : this.listTache){
+			if(t.getCategorie() != null){
+				if(t.getCategorie().getIdentifiant() == catInfo.getIdentifiant())	t.setCategorie(catInfo);
+			}
+		}
+		updateTache();
+		
+	}
 
 
 }

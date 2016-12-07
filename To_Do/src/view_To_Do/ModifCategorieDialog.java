@@ -22,7 +22,6 @@ import model_To_Do.Categorie;
 public class ModifCategorieDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private Categorie info;
-	private boolean sendData;
 	private  JTextField nom;
 	private MyFrame owner;
 
@@ -38,9 +37,8 @@ public class ModifCategorieDialog extends JDialog {
 	}
 
 	public Categorie showModifDialog(){
-		this.sendData = false;
 		this.setVisible(true);      
-		return (this.sendData)? info : null;      
+		return  info;      
 	}
 
 	private void initComponent(){
@@ -81,8 +79,8 @@ public class ModifCategorieDialog extends JDialog {
 
 		okBouton.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent arg0) {
-				Categorie cat = owner.getController().getListCategorie().get(combo.getSelectedIndex());
-				cat.setNom(nom.getText());
+				info = owner.getController().getListCategorie().get(combo.getSelectedIndex());
+				System.out.println(info);
 				setVisible(false);
 			}
 		});

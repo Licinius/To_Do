@@ -32,7 +32,6 @@ public class TacheDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private Tache info;
 	private MyFrame owner;
-	private boolean sendData;
 	private JTextField nom;
 	private JFormattedTextField echeance;
 	private JTextField description;
@@ -49,7 +48,6 @@ public class TacheDialog extends JDialog {
 	}
 	
 	public Tache showTacheDialog(){
-		this.sendData = false;
 		this.setVisible(true);      
 		return this.info;      
 	}
