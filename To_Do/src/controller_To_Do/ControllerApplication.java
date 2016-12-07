@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
 import model_To_Do.Categorie;
@@ -41,10 +42,15 @@ public class ControllerApplication {
 			while(fichierInStream.available() > 0){
 				Tache tmp = (Tache)ois.readObject();
 				if(!tmp.isTermine())
+					if(tmp.getEcheance().before(Calendar.getInstance()))
+						tmp.setRetard(true);
+					else
+						tmp.setRetard(false);
 					listTache.add(tmp);
 			}
 			ois.close();
 		}
+		updateTache();
 		view = v;
 
 	}

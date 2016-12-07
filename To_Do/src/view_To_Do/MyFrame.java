@@ -28,7 +28,8 @@ public class MyFrame extends JFrame{
 	private JPanel panelTache = new JPanel();
 	private JScrollPane scroll ;
 	private JButton[] tabButtonMenu = new JButton[4];
-
+	private EnumTri tri;
+	private JPanel panelTri = new JPanel();
 	public MyFrame(){
 		//this.matriceTree = matriceTree;
 		setSize(900, 600);
@@ -58,9 +59,28 @@ public class MyFrame extends JFrame{
 		}
 		panelTache.setSize(900,4600);
 		add(panelTache,"Center");
+		tri = EnumTri.Simple;
+		controller.triSimple();
 		printTache();
 		scroll = new JScrollPane(panelTache,JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED,JScrollPane.HORIZONTAL_SCROLLBAR_AS_NEEDED);
 		this.add(scroll,"East");
+		
+		panelTri.setLayout(new GridLayout());
+		JButton jbSimple = new JButton("Tri Simple");
+		jbSimple.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.triSimple();
+				printTache();
+			}
+		});
+		panelTri.add(jbSimple);
+		
+		JButton jbComplexe = new JButton("Tri Complexe");
+		panelTri.add(jbComplexe);
+		
+		JButton jbPrioritaire = new JButton("Tri Prioritaire");
+		panelTri.add(jbPrioritaire);
+		add(panelTri,"South");
 
 	}
 
@@ -123,6 +143,19 @@ public class MyFrame extends JFrame{
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
+			switch(tri){
+			case Complexe:
+				break;
+			case Prioritaire:
+				break;
+			case Simple:
+				controller.triSimple();
+				break;
+			default:
+				controller.triSimple();
+				break;
+			
+			}
 			printTache();
 		}
 
@@ -145,6 +178,17 @@ public class MyFrame extends JFrame{
 				controller.modifierTache(tacheInfo);
 			} catch (IOException e1) {
 				e1.printStackTrace();
+			}
+			switch(tri){
+			case Complexe:
+				break;
+			case Prioritaire:
+				break;
+			case Simple:
+			default:
+				controller.triSimple();
+				break;
+			
 			}
 			printTache();
 		}
