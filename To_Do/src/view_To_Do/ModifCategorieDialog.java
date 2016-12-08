@@ -39,7 +39,9 @@ public class ModifCategorieDialog extends JDialog {
 		this.setVisible(true);      
 		return  info;      
 	}
-
+	/**
+	 * Initialise les composants de la boîte de dialogue ModifCategorie
+	 */
 	private void initComponent(){
 		JPanel panCat = new JPanel();
 		panCat.setPreferredSize(new Dimension(220, 150));

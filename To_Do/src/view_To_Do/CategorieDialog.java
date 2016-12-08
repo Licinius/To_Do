@@ -31,13 +31,19 @@ public class CategorieDialog extends JDialog {
 	    this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 	    this.initComponent();
 	  }
-
+	  /**
+	   * Envoie les informations d'une catégorie une fois fini
+	   * @return
+	   * 	Une Categorie
+	   */
 	  public Categorie showTacheDialog(){
 	    this.sendData = false;
 	    this.setVisible(true);      
 	    return this.info;      
 	  }
-
+	  /**
+	   * Initialise les composants de la fenêtre de dialogue 
+	   */
 	  private void initComponent(){
 		    //Le nom
 		  	JPanel panNom = new JPanel();

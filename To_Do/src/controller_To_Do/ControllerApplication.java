@@ -281,7 +281,7 @@ public class ControllerApplication {
 	 * 	Tache au long cours que l'on souhaite modifier
 	 * @throws IOException
 	 */
-	public void modiferGranularite(Tache tache) throws IOException{
+	public void modifierGranularite(Tache tache) throws IOException{
 		((TacheLongCours) tache).setGranularite(((TacheLongCours) tache).getGranularite()+5);
 		for (int i = 0; i < listCategorie.size(); i++) {
 			if (listTache.get(i).getId() == tache.getId()) {

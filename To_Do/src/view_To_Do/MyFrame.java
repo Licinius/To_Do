@@ -30,6 +30,8 @@ public class MyFrame extends JFrame{
 	private JButton[] tabButtonMenu = new JButton[4];
 	private EnumTri tri;
 	private JPanel panelTri = new JPanel();
+	
+	
 	public MyFrame(){
 		//this.matriceTree = matriceTree;
 		setSize(900, 600);
@@ -88,7 +90,9 @@ public class MyFrame extends JFrame{
 	public ControllerApplication getController() {
 		return controller;
 	}
-
+	/**
+	 * Affiche les taches tels qu'elles sont rangées dans l'arraylist du controller
+	 */
 	public void printTache() {
 		ArrayList<Tache> list = controller.getListTache();
 		panelTache.removeAll();
@@ -127,7 +131,11 @@ public class MyFrame extends JFrame{
 		this.repaint();
 		this.revalidate();
 	}
-
+	/**
+	 * Action listener du bouton créerTache qui fait appel à TacheDialog et reprint la liste de tache suivant son tri
+	 * @author Team à Antroller
+	 *
+	 */
 	class creerTacheListener implements ActionListener{
 
 		private MyFrame mf;
@@ -161,7 +169,29 @@ public class MyFrame extends JFrame{
 		}
 
 	}
+	/**
+	 * ActionListener du bouton "Créer Categorie" qui permet de créer une categorie avec CategorieDialog
+	 * @author Team à Antroller
+	 *
+	 */
+	class creerCategorieListener implements ActionListener{
 
+		public void actionPerformed(ActionEvent e) {
+			CategorieDialog t = new CategorieDialog(null,"Créer une nouvelle catégorie",true);		
+			Categorie categorieInfo = t.showTacheDialog();
+			try {
+				controller.createCategorie(categorieInfo);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+			}
+		}
+
+	}
+	/**
+	 * Action listener du bouton modifierTache  qui fait appel à ModifTacheDialog et reprint la liste de tache suivant son tri
+	* @author Team à Antroller
+	 *
+	 */
 	class ModifTacheListener implements ActionListener{
 
 		private MyFrame mf;
@@ -195,7 +225,11 @@ public class MyFrame extends JFrame{
 		}
 
 	}
-
+	/**
+	 * Action listener du bouton "Modifier Categorie"   qui fait appel à ModifCategorieDialog et reprint la liste de tache suivant son tri
+	* @author Team à Antroller
+	 *
+	 */
 	class ModifCatListener implements ActionListener{
 
 		private MyFrame mf;
@@ -217,7 +251,11 @@ public class MyFrame extends JFrame{
 		}
 
 	}
-
+	/**
+	 * Action listener du bouton "Supprimer Categorie"   qui fait appel à SupprimerCategorieDialog et reprint la liste de tache suivant son tri
+	* @author Team à Antroller
+	 *
+	 */
 	class SupprimerCategorie implements ActionListener{
 
 		private MyFrame mf;
@@ -238,6 +276,11 @@ public class MyFrame extends JFrame{
 		}
 
 	}
+	/**
+	 * Action listener du bouton "Terminer tache"   qui fait appel termine la tache et reprint la liste de tache suivant son tri
+	* @author Team à Antroller
+	 *
+	 */
 	class terminerBoutonTache implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			BoutonTache bouton= (BoutonTache)e.getSource();
@@ -249,18 +292,27 @@ public class MyFrame extends JFrame{
 			printTache();
 		}
 	}
-
+	/**
+	 * ActionListener du bouton augmenterGranularite qui augmente de 5 la granularite actuelle à l'aide de la fonction modifierGranularite(Tache t)
+	 * @author Team à Antroller
+	 *
+	 */
 	class augmenterGranularite implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			BoutonTache bouton= (BoutonTache)e.getSource();
 			try {
-				controller.modiferGranularite(bouton.getTache());
+				controller.modifierGranularite(bouton.getTache());
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
 			printTache();
 		}
 	}
+	/**
+	 * ActionListener du bouton SupprimerTache qui supprime la tache cliquée
+	 * @author Team à Antroller
+	 *
+	 */
 	class supprimerTacheListener implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			BoutonTache bouton= (BoutonTache)e.getSource();
@@ -273,61 +325,9 @@ public class MyFrame extends JFrame{
 		}
 
 	}
-	class creerCategorieListener implements ActionListener{
 
-		public void actionPerformed(ActionEvent e) {
-			CategorieDialog t = new CategorieDialog(null,"Créer une nouvelle catégorie",true);		
-			Categorie categorieInfo = t.showTacheDialog();
-			try {
-				controller.createCategorie(categorieInfo);
-			} catch (IOException e1) {
-				e1.printStackTrace();
-			}
-		}
-
-	}
 	public static void main(String[] args) {
-
 		MyFrame f = new MyFrame();
 		f.setVisible(true);
-
-		//		Categorie cat = new Categorie("Personnel");
-		//		Categorie cat2 = new Categorie("Professionnel");
-		//		Calendar date = new GregorianCalendar(2016, 11, 12); //YYYY MM-1 DD
-		//		Calendar date2 = new GregorianCalendar(2019, 11, 25);
-		//		Calendar date3 = new GregorianCalendar(2021, 01, 15);
-		//		TachePonctuelle t=null, t2=null, t3=null;
-		//		try {
-		//			t = new TachePonctuelle("Faire a manger","Surement du Poulet", date, cat);
-		//			t2 = new TachePonctuelle("Acheter des cadeaux","Un gros camion pour Lulu", date2, cat);
-		//			t3 = new TachePonctuelle("Trouver un boulot","C'est fini le chomage", date3, cat2);
-		//		} catch (ExceptionTacheAnterieur e1) {
-		//			e1.printStackTrace();
-		//		}
-		//		try {
-		//			cA.createCategorie(cat);
-		//			cA.createCategorie(cat2);
-		//			cA.createTache(t);
-		//			cA.createTache(t2);
-		//			cA.createTache(t3);
-		//		} catch (IOException e) {
-		//			System.out.println("Erreur");
-		//			e.printStackTrace();
-		//		}
-
-		//		try {
-		//			cA.deleteCategorie(0);
-		//			cA.deleteCategorie(1);
-		//			cA.deleteCategorie(2);
-		//			cA.deleteCategorie(3);
-		//		} catch (IOException e) {
-		//			// TODO Auto-generated catch block
-		//			e.printStackTrace();
-		//		}
-
-		//		cA.printCategorie();
-		//		cA.printTache();
-
-
 	}
 }
