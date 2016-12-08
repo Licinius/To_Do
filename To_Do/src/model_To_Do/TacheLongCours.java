@@ -37,25 +37,25 @@ public class TacheLongCours extends Tache {
 	}
 	/**
 	 * IsRetard pour un objet TacheLongCours est plus complexe car il suit la règle suivante  :
-	 * Si on nomme d la durée impartie pour une tˆache
-	 * (différence entre son échéance et sa date de d´ebut), on vérifie l’avancement à chaque pas de d/4 : l’avancement
+	 * Si on nomme d la durée impartie pour une tâche
+	 * (différence entre son échéance et sa date de début), on vérifie l’avancement à chaque pas de d/4 : l’avancement
 	 *	doit être au moins de 25% à d/4, de 50% à d/2, de 75% à 3d/4 et de 100% à d. 
 	 * 
 	 */
 	public boolean isRetarded(){
 		long diff =  super.getEcheance().getTimeInMillis()-dateDebut.getTimeInMillis();
-		long restant = Calendar.getInstance().getTimeInMillis()- dateDebut.getTimeInMillis() ;
-		if(restant <diff/4){
-			return false;
+		long restant = super.getEcheance().getTimeInMillis()-Calendar.getInstance().getTimeInMillis();
+		if(restant >diff/4){
+			return true;
 		}
-		if (restant<diff/2){
+		if (restant>diff/2){
 			return granularite>=25;
 				
 		}
-		if (restant<3*diff/4){
+		if (restant>(3*diff)/4){
 			return granularite>=50;
 		}
-		if(restant<diff){
+		if(restant>diff){
 			return granularite>=75;
 		}
 		
