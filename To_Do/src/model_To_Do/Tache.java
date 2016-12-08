@@ -127,7 +127,9 @@ public abstract class Tache implements Serializable {
 	public int getId() {
 		return id;
 	}
-
+	public boolean isRetarded(){
+		return this.getEcheance().before(Calendar.getInstance());
+	}
 	public String toString() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(echeance.getTime());

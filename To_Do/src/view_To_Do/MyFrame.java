@@ -69,6 +69,7 @@ public class MyFrame extends JFrame{
 		JButton jbSimple = new JButton("Tri Simple");
 		jbSimple.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				tri = EnumTri.Simple;
 				controller.triSimple();
 				printTache();
 			}

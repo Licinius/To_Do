@@ -42,10 +42,7 @@ public class ControllerApplication {
 			while(fichierInStream.available() > 0){
 				Tache tmp = (Tache)ois.readObject();
 				if(!tmp.isTermine())
-					if(tmp.getEcheance().before(Calendar.getInstance()))
-						tmp.setRetard(true);
-					else
-						tmp.setRetard(false);
+					tmp.setRetard(tmp.isRetarded());
 					listTache.add(tmp);
 			}
 			ois.close();

@@ -12,10 +12,12 @@ public class TacheLongCours extends Tache {
 
 	private static final long serialVersionUID = 3081649104084734383L;
 	private int granularite;
+	private Calendar dateDebut;
 
 	public TacheLongCours(String nom, String description, Calendar echeance, Categorie categorie) throws ExceptionTacheAnterieur{
 		super(nom, description, echeance, categorie);
 		this.granularite = 0;
+		dateDebut=  Calendar.getInstance();
 	}
 
 	public TacheLongCours(int id, String nom, Calendar echeance, int granularite) throws ExceptionTacheAnterieur{
@@ -26,8 +28,27 @@ public class TacheLongCours extends Tache {
 	protected void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
 		super.readObject(ois);
 		this.granularite = ois.readInt();
+		this.dateDebut = (Calendar) ois.readObject();
 	}
-	
+	public boolean isRetarded(){
+		long diff =  super.getEcheance().getTimeInMillis()-dateDebut.getTimeInMillis();
+		long restant = Calendar.getInstance().getTimeInMillis()- dateDebut.getTimeInMillis() ;
+		if(restant <diff/4){
+			return false;
+		}
+		if (restant<diff/2){
+			return granularite>=25;
+				
+		}
+		if (restant<3*diff/4){
+			return granularite>=50;
+		}
+		if(restant<diff){
+			return granularite>=75;
+		}
+		
+		return granularite>=100;
+	}
 	public int getGranularite() {
 		return granularite;
 	}
@@ -41,6 +62,7 @@ public class TacheLongCours extends Tache {
 	protected void writeObject(ObjectOutputStream oos) throws IOException{
 		super.writeObject(oos);
 		oos.writeInt(this.granularite);
+		oos.writeObject(dateDebut);
 	}
 	public Map<String,String> getInformation() { 
 		Map<String,String> str = super.getInformation();
