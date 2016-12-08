@@ -17,6 +17,7 @@ import model_To_Do.TacheLongCours;
 public class ControllerApplication {
 	private ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
 	private ArrayList<Tache> listTache = new ArrayList<Tache>();
+	private ArrayList<Tache> listTacheTermine = new ArrayList<Tache>();
 	public ControllerApplication() throws IOException, ClassNotFoundException{
 		//Lecture des categories
 		File fichierIn =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
@@ -42,6 +43,8 @@ public class ControllerApplication {
 				if(!tmp.isTermine()){
 					tmp.setRetard(tmp.isRetarded());
 					listTache.add(tmp);
+				}else{
+					listTacheTermine.add(tmp);
 				}
 			}
 			ois.close();
@@ -143,6 +146,9 @@ public class ControllerApplication {
 		for(Tache t : this.listTache){
 			oos.writeObject(t);
 		}
+		for(Tache t: this.listTacheTermine){
+			oos.writeObject(t);
+		}
 		oos.close();
 	}
 	
@@ -155,14 +161,7 @@ public class ControllerApplication {
 	public void createTache(Tache tache) throws IOException{
 		if(tache !=null){
 			listTache.add(tache);
-			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Tache t : this.listTache){
-				oos.writeObject(t);
-			}
-			oos.close();
+			updateTache();
 		}
 	}
 	
@@ -175,14 +174,7 @@ public class ControllerApplication {
 	public void deleteTache(Tache tache) throws IOException{
 		if(tache!=null){
 			listTache.remove(tache);
-			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Tache t : this.listTache){
-				oos.writeObject(t);
-			}
-			oos.close();
+			updateTache();
 		}
 	}
 	
@@ -200,14 +192,7 @@ public class ControllerApplication {
 					break;
 				}
 			}
-			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Tache t : this.listTache){
-				oos.writeObject(t);
-			}
-			oos.close();
+			updateTache();
 		}
 	}
 
@@ -259,21 +244,11 @@ public class ControllerApplication {
 	 */
 	public void terminerTache(Tache tache)throws IOException {
 
-		for (int i = 0; i < listCategorie.size(); i++) {
-			if (listTache.get(i).getId() == tache.getId()) {
-				listTache.get(i).setTermine(true);
-				listTache.remove(listTache.get(i));
-				break;
-			}
-		}
-		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
-		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-		ObjectOutputStream oos=null;
-		oos = new ObjectOutputStream(fichierOutStream);
-		for(Tache t : this.listTache){
-			oos.writeObject(t);
-		}
-		oos.close();
+
+		tache.setTermine(true);
+		listTache.remove(tache);
+		listTacheTermine.add(tache);
+		updateTache();
 	}
 	/**
 	 * Permet de modifier dans le fichier .ser la granularite d'une tache au long cours
@@ -285,14 +260,7 @@ public class ControllerApplication {
 		((TacheLongCours) tache).setGranularite(((TacheLongCours) tache).getGranularite()+5);
 		tache.setRetard(tache.isRetarded());
 
-		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
-		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-		ObjectOutputStream oos=null;
-		oos = new ObjectOutputStream(fichierOutStream);
-		for(Tache t : this.listTache){
-			oos.writeObject(t);
-		}
-		oos.close();
+		updateTache();
 		
 	}
 	
@@ -338,6 +306,7 @@ public class ControllerApplication {
 			updateTache();
 		}
 	}
+
 
 
 }
