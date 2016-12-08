@@ -236,12 +236,16 @@ public class ControllerApplication {
 	}
 	
 	/**
-	 * 
+	 *  On trie ainsi la liste de manière à prendre en compte les échéances intermédiaires
+	 *  Complexité : O(n²)
 	 */
 	public void triComplexe(){
-		for(Tache t : listTache){
-			SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
-			System.out.println(t.getNom() + "   :   " + format1.format(t.getNextEcheance().getTime()));
+		for (int i = 0; i < listTache.size()-1; i++) {
+			for (int j = i+1; j < listTache.size(); j++) {
+				if (listTache.get(i).getNextEcheance().after(listTache.get(j).getNextEcheance())) {
+					Collections.swap(listTache, i, j);
+				}
+			}
 		}
 	}
 
@@ -253,8 +257,6 @@ public class ControllerApplication {
 	 * @throws IOException
 	 */
 	public void terminerTache(Tache tache)throws IOException {
-
-
 		tache.setTermine(true);
 		listTache.remove(tache);
 		listTacheTermine.add(tache);

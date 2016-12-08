@@ -162,13 +162,12 @@ public class MyFrame extends JFrame{
 			}
 			switch(tri){
 			case Complexe:
+				controller.triComplexe();
 				break;
 			case Prioritaire:
 				break;
 			case Simple:
 				controller.triSimple();
-				break;
-			default:
 				controller.triSimple();
 				break;
 			
@@ -220,6 +219,7 @@ public class MyFrame extends JFrame{
 			}
 			switch(tri){
 			case Complexe:
+				controller.triComplexe();
 				break;
 			case Prioritaire:
 				break;
@@ -311,6 +311,18 @@ public class MyFrame extends JFrame{
 				controller.modifierGranularite(bouton.getTache());
 			} catch (IOException e1) {
 				e1.printStackTrace();
+			}
+			switch(tri){
+				case Complexe:
+					controller.triComplexe();
+					break;
+				case Prioritaire:
+					break;
+				case Simple:
+				default:
+					controller.triSimple();
+					break;
+			
 			}
 			printTache();
 		}
