@@ -36,12 +36,6 @@ public class CategorieTest {
 		this.cat.setNom("nomCategorie");
 	}
 
-	@Test 
-	public void testGetIdentifiant() {
-		System.out.println(this.cat.getIdentifiant());
-		assertEquals(this.cat.getIdentifiant(), 0);
-	}
-
 	@Test
 	public void testEqualsCategorie() {
 		Categorie test = new Categorie("testCategorie");

@@ -99,11 +99,6 @@ public class TacheLongCoursTest {
 	}
 
 	@Test
-	public void testGetId() {
-		assertEquals(tache.getId(), 0);
-	}
-
-	@Test
 	public void testSetId() {
 		tache.setId(12);
 		assertEquals(tache.getId(), 12);
