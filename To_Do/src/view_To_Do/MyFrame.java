@@ -56,7 +56,7 @@ public class MyFrame extends JFrame{
 		}
 		setJMenuBar(jmb);
 		try {
-			controller = new ControllerApplication(this);
+			controller = new ControllerApplication();
 		} catch (ClassNotFoundException | IOException e) {
 			e.printStackTrace();
 		}

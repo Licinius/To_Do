@@ -13,12 +13,11 @@ import java.util.Collections;
 import model_To_Do.Categorie;
 import model_To_Do.Tache;
 import model_To_Do.TacheLongCours;
-import view_To_Do.MyFrame;
 
 public class ControllerApplication {
 	private ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
 	private ArrayList<Tache> listTache = new ArrayList<Tache>();
-	public ControllerApplication(MyFrame v) throws IOException, ClassNotFoundException{
+	public ControllerApplication() throws IOException, ClassNotFoundException{
 		//Lecture des categories
 		File fichierIn =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
 		FileInputStream fichierInStream = new FileInputStream(fichierIn);
@@ -284,15 +283,8 @@ public class ControllerApplication {
 	 */
 	public void modifierGranularite(Tache tache) throws IOException{
 		((TacheLongCours) tache).setGranularite(((TacheLongCours) tache).getGranularite()+5);
-		for (int i = 0; i < listCategorie.size(); i++) {
-			if (listTache.get(i).getId() == tache.getId()) {
-				((TacheLongCours) listTache.get(i)).setGranularite(((TacheLongCours) tache).getGranularite());
-				if(tache.isTermine()){
-					listTache.remove(listTache.get(i));
-				}
-				break;
-			}
-		}
+		tache.setRetard(tache.isRetarded());
+
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
 		ObjectOutputStream oos=null;
