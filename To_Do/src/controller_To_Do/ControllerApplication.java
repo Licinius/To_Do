@@ -8,7 +8,6 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Collections;
 
 import model_To_Do.Categorie;
@@ -51,6 +50,15 @@ public class ControllerApplication {
 		view = v;
 
 	}
+	
+	public ArrayList<Tache> getListTache() {
+		return listTache;
+	}
+	
+	public ArrayList<Categorie> getListCategorie() {
+		return listCategorie;
+	}
+	
 	/**
 	 * Cette fonction crée un nouveau fichier contenant les nouvelles catégories
 	 * @param categorie
@@ -96,7 +104,12 @@ public class ControllerApplication {
 			updateTache();
 		}
 	}
-
+	/**
+	 * Supprime une categorie du fichier ser à l'aide de son identifiant
+	 * @param id
+	 * 	Identifiant de la categorie que l'on souhaite supprimer
+	 * @throws IOException
+	 */
 	public void deleteCategorie(int id) throws IOException{
 		for (int i = 0; i < listCategorie.size(); i++) {
 			if (listCategorie.get(i).getIdentifiant() == id) {
@@ -119,7 +132,10 @@ public class ControllerApplication {
 		}
 		updateTache();
 	}
-
+	/**
+	 * Met à jour le fichier tache.ser
+	 * @throws IOException
+	 */
 	private void updateTache() throws IOException{
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
@@ -130,6 +146,13 @@ public class ControllerApplication {
 		}
 		oos.close();
 	}
+	
+	/**
+	 * Créer une tache dans le fichier ser
+	 * @param tache
+	 * 	La tache que l'on souhaite ajouter au fichier tache.ser
+	 * @throws IOException
+	 */
 	public void createTache(Tache tache) throws IOException{
 		if(tache !=null){
 			listTache.add(tache);
@@ -143,7 +166,13 @@ public class ControllerApplication {
 			oos.close();
 		}
 	}
-
+	
+	/**
+	 * Supprime une tache contenu dans le fichier ser
+	 * @param tache
+	 * 	Tache que l'on souhaite supprimer
+	 * @throws IOException
+	 */
 	public void deleteTache(Tache tache) throws IOException{
 		if(tache!=null){
 			listTache.remove(tache);
@@ -157,7 +186,13 @@ public class ControllerApplication {
 			oos.close();
 		}
 	}
-
+	
+	/**
+	 * Supprime une tache contenu dans le fichier ser à l'aide de son identifiant
+	 * @param id	
+	 * 	Identifiant de la tache que l'on souhaite supprimer
+	 * @throws IOException
+	 */
 	public void deleteTache(int id) throws IOException{
 		if(id>=0){
 			for (int i = 0; i < listCategorie.size(); i++) {
@@ -177,7 +212,9 @@ public class ControllerApplication {
 		}
 	}
 
-
+	/**
+	 * Permet d'afficher les catégories contenus dans le fichier categorie.ser
+	 */
 	public void printCategorie(){
 		for(Categorie cat : this.listCategorie){
 			System.out.println(cat.toString());
@@ -185,6 +222,10 @@ public class ControllerApplication {
 		System.out.println();
 	}
 
+	/**
+	 * Supprime tout le contenu des fichier ser en les écrasant
+	 * @throws FileNotFoundException
+	 */
 	public void deleteAll() throws FileNotFoundException{
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
@@ -193,7 +234,11 @@ public class ControllerApplication {
 		fichierOutStream = new FileOutputStream(fichierOut);
 
 	}
-
+	
+	/**
+	 * Tri la liste de façon simplifier en mettant les taches les plus urgents en premier
+	 * Complexité : O(n²)
+	 */
 	public void triSimple() {
 		for (int i = 0; i < listTache.size()-1; i++) {
 			for (int j = i+1; j < listTache.size(); j++) {
@@ -203,21 +248,15 @@ public class ControllerApplication {
 			}
 		}
 	}
-	public void printTache() {
-		for(Tache t : this.listTache){
-			System.out.println(t.toStringPourTesterPourLesJLabels());
-		}
-		System.out.println();
-
-	}
-
-	public ArrayList<Tache> getListTache() {
-		return listTache;
-	}
 	
-	public ArrayList<Categorie> getListCategorie() {
-		return listCategorie;
-	}
+
+	
+	/**
+	 * Set tache.termine a true et supprime de list
+	 * @param tache
+	 * 	la tache que l'on souhaite terminer
+	 * @throws IOException
+	 */
 	public void terminerTache(Tache tache)throws IOException {
 
 		for (int i = 0; i < listCategorie.size(); i++) {
@@ -236,6 +275,12 @@ public class ControllerApplication {
 		}
 		oos.close();
 	}
+	/**
+	 * Permet de modifier dans le fichier .ser la granularite d'une tache au long cours
+	 * @param tache
+	 * 	Tache au long cours que l'on souhaite modifier
+	 * @throws IOException
+	 */
 	public void modiferGranularite(Tache tache) throws IOException{
 		((TacheLongCours) tache).setGranularite(((TacheLongCours) tache).getGranularite()+5);
 		for (int i = 0; i < listCategorie.size(); i++) {
@@ -257,6 +302,13 @@ public class ControllerApplication {
 		oos.close();
 		
 	}
+	
+	/**
+	 * Permet de modifier une categorie 
+	 * @param catInfo
+	 * 	Categorie que l'on souhaite modifier
+	 * @throws IOException
+	 */
 	public void modifierCategorie(Categorie catInfo) throws IOException {
 		if(catInfo !=null){
 			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
@@ -275,9 +327,13 @@ public class ControllerApplication {
 			updateTache();
 		}
 	}
-	
+	/**
+	 * Permet de modifier une tache dans le fichier ser
+	 * @param tacheInfo tache que l'on souhaite modifier
+	 * @throws IOException
+	 */
 	public void modifierTache(Tache tacheInfo) throws IOException {
-		if(tacheInfo !=null){
+		if(tacheInfo !=null){//Verifie si la tache n'est pas null
 			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
 			ObjectOutputStream oos=null;

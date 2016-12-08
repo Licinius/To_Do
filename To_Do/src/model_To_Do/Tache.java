@@ -47,13 +47,23 @@ public abstract class Tache implements Serializable {
 		if (echeance.after(Calendar.getInstance()))	this.echeance = echeance;
 		else	throw new ExceptionTacheAnterieur(echeance.toString());
 	}
-
+	/**
+	 * Permet de connaitre en le nombre de jours restants avant l'échéance
+	 * @return un entier correspondant au nombre de jours restants
+	 */
 	public int getJourRestant() {
 		long diff = echeance.getTimeInMillis() - System.currentTimeMillis();
 		return (int)  (diff/86400000); // Diviser par le nombre de milliseconde dans une journee
 		 
 	}
 	
+	/**
+	 * Permet de recreer l'objet contenu dans le stream envoyé en paramètre
+	 * @param ois
+	 * 	Stream de lecture de l'objet
+	 * @throws IOException
+	 * @throws ClassNotFoundException
+	 */
 	protected void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
 		compteur = ois.readInt();
 		this.id = compteur++;
@@ -65,6 +75,12 @@ public abstract class Tache implements Serializable {
 		this.termine = ois.readBoolean();
 	}
 	
+	/**
+	 * Permet d'écrire l'objet dans le stream envoyé en paramètre
+	 * @param oos
+	 * 	Stream d'écriture de l'objet
+	 * @throws IOException
+	 */
 	protected void writeObject(ObjectOutputStream oos) throws IOException{
 		oos.writeInt(id);
 		oos.writeUTF(description);
@@ -127,21 +143,20 @@ public abstract class Tache implements Serializable {
 	public int getId() {
 		return id;
 	}
+	/**
+	 * Permet de connaitre si la tache est en retard
+	 * @return
+	 * 	true si la tache est en retard 
+	 */
 	public boolean isRetarded(){
 		return this.getEcheance().before(Calendar.getInstance());
 	}
+	
 	public String toString() {
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(echeance.getTime());
 		return "Tache [id=" + id + ", nom=" + nom + ", description=" + description + ", echeance=" + formatted
 				+ ", categorie=" + categorie.getNom() + "]";
-	}
-	
-	public String toStringPourTesterPourLesJLabels() {
-		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
-		String affichage = nom + "\t" + description + "\t" + format1.format(echeance.getTime()) + "\t";
-		affichage += this.categorie == null ? "Sans Catégorie" : categorie.getNom();
-		return affichage;
 	}
 	
 	public boolean isRetard() {
@@ -159,7 +174,11 @@ public abstract class Tache implements Serializable {
 	public void setTermine(boolean termine) {
 		this.termine = termine;
 	}
-
+	/**
+	 * Retourne une map (ou tableau associatif) d'un objet Tache
+	 * @return
+	 * 	Une LinkedHashMap contenant ["nom","Echeance","Description","Categorie"]
+	 */
 	public Map <String,String> getInformation() { //recupère les informations pour les affichés au bon endroit
 		SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
 		Map<String,String> str = new LinkedHashMap<String,String>(); //LinkedHashMap sinon les maps en général font des tries
@@ -170,6 +189,13 @@ public abstract class Tache implements Serializable {
 		return str;
 	}
 	
+	/**
+	 * Deux taches sont équivalentes quand leurs identifiants sont identiques
+	 * @param t
+	 * 	Tache que l'on souhaite vérifier l'équivalence
+	 * @return
+	 * 	true si les taches sont équivalentes
+	 */
 	public boolean equals(Tache t){
 		return t.id == this.id;
 	}

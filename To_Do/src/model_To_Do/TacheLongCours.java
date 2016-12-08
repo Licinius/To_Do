@@ -24,12 +24,24 @@ public class TacheLongCours extends Tache {
 		super(id, nom, echeance);
 		this.granularite = granularite;
 	}
-	
 	protected void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
 		super.readObject(ois);
 		this.granularite = ois.readInt();
 		this.dateDebut = (Calendar) ois.readObject();
 	}
+
+	protected void writeObject(ObjectOutputStream oos) throws IOException{
+		super.writeObject(oos);
+		oos.writeInt(this.granularite);
+		oos.writeObject(dateDebut);
+	}
+	/**
+	 * IsRetard pour un objet TacheLongCours est plus complexe car il suit la règle suivante  :
+	 * Si on nomme d la durée impartie pour une tˆache
+		(diff´erence entre son échéance et sa date de d´ebut), on vérifie l’avancement à chaque pas de d/4 : l’avancement
+		doit être au moins de 25% à d/4, de 50% à d/2, de 75% à 3d/4 et de 100% à d. 
+	 * 
+	 */
 	public boolean isRetarded(){
 		long diff =  super.getEcheance().getTimeInMillis()-dateDebut.getTimeInMillis();
 		long restant = Calendar.getInstance().getTimeInMillis()- dateDebut.getTimeInMillis() ;
@@ -52,18 +64,18 @@ public class TacheLongCours extends Tache {
 	public int getGranularite() {
 		return granularite;
 	}
-
+	/**
+	 * Setter de la granularite si la granularite passe à 100% la tache est terminé
+	 * @param granularite
+	 */
 	public void setGranularite(int granularite) {
 		if(granularite ==100)
 			super.setTermine(true);
 		this.granularite = granularite;
 	}
-
-	protected void writeObject(ObjectOutputStream oos) throws IOException{
-		super.writeObject(oos);
-		oos.writeInt(this.granularite);
-		oos.writeObject(dateDebut);
-	}
+	/**
+	 * Rajout de la granularite dans la Map
+	 */
 	public Map<String,String> getInformation() { 
 		Map<String,String> str = super.getInformation();
 		str.put("Granularite",String.valueOf(this.granularite));
