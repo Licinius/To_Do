@@ -11,12 +11,12 @@ public class TacheLongCours extends Tache {
 
 	private static final long serialVersionUID = 3081649104084734383L;
 	private int granularite;
-	private Calendar dateDebut;
+
 
 	public TacheLongCours(String nom, String description, Calendar echeance, Categorie categorie) throws ExceptionTacheAnterieur{
 		super(nom, description, echeance, categorie);
 		this.granularite = 0;
-		dateDebut=  Calendar.getInstance();
+		
 	}
 
 	public TacheLongCours(int id, String nom, Calendar echeance, int granularite) throws ExceptionTacheAnterieur{
@@ -32,8 +32,8 @@ public class TacheLongCours extends Tache {
 	 * 
 	 */
 	public boolean isRetarded(){
-		long diff =  super.getEcheance().getTimeInMillis()-dateDebut.getTimeInMillis();
-		long restant = Calendar.getInstance().getTimeInMillis()-dateDebut.getTimeInMillis();
+		long diff =  super.getEcheance().getTimeInMillis()-super.getDateDebut().getTimeInMillis();
+		long restant = Calendar.getInstance().getTimeInMillis()-super.getDateDebut().getTimeInMillis();
 		if(restant <diff/4){
 			return false;
 		}
@@ -72,18 +72,18 @@ public class TacheLongCours extends Tache {
 	}
 	
 	public Calendar getNextEcheance(){
-		long diff =  super.getEcheance().getTimeInMillis()-dateDebut.getTimeInMillis();
+		long diff =  super.getEcheance().getTimeInMillis()-super.getDateDebut().getTimeInMillis();
 		Calendar res = Calendar.getInstance();
 		if (granularite<25){
-			res.setTimeInMillis(dateDebut.getTimeInMillis()+(diff/4));
+			res.setTimeInMillis(super.getDateDebut().getTimeInMillis()+(diff/4));
 			return res;
 		}
 		if (granularite<50){
-			res.setTimeInMillis(dateDebut.getTimeInMillis()+(diff/2));
+			res.setTimeInMillis(super.getDateDebut().getTimeInMillis()+(diff/2));
 			return res;
 		}
 		if (granularite<75){
-			res.setTimeInMillis(dateDebut.getTimeInMillis()+(3*diff/2));
+			res.setTimeInMillis(super.getDateDebut().getTimeInMillis()+(3*diff/2));
 			return res;
 		}
 		return super.getEcheance();

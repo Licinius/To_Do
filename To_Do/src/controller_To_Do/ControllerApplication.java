@@ -9,6 +9,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
 
 import model_To_Do.Categorie;
@@ -325,6 +326,21 @@ public class ControllerApplication {
 			oos.close();
 			updateTache();
 		}
+	}
+	
+	public ArrayList<Tache> getListBilan(Calendar c1, Calendar c2){
+		ArrayList<Tache> arT = new ArrayList<Tache>();
+		for(Tache t : listTache){
+			if(t.getDateDebut().after(c1) && t.getEcheance().before(c2)){
+				arT.add(t);
+			}
+		}
+		for(Tache t : listTacheTermine){
+			if(t.getDateDebut().after(c1) && t.getEcheance().before(c2)){
+				arT.add(t);
+			}
+		}
+		return arT;
 	}
 
 

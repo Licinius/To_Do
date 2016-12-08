@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -266,6 +267,26 @@ public class MyFrame extends JFrame{
 	 */
 	class Bilan implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
+			BilanDialog b = new BilanDialog(null,"Editer un bilan",true);
+			Calendar[] c = b.showChoixDate();
+			ArrayList<Tache> arT = controller.getListBilan(c[0], c[1]);
+			ArrayList<Tache> toDo = new ArrayList<Tache>();
+			int pourcentageRealise = 0;
+			int pourcentageRetard = 0;
+			int pourcentageNonRealise = 0;
+			
+			for(Tache t : arT){
+				if(!t.isTermine()){
+					toDo.add(t);
+					pourcentageNonRealise++;
+					if(t.isRetard())
+						pourcentageRetard++;
+					
+				}else{
+					pourcentageRealise++;
+				}
+			}
+			
 			
 		}
 

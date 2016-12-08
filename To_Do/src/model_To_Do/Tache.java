@@ -19,6 +19,7 @@ public abstract class Tache implements Serializable {
 	private Categorie categorie;
 	private boolean retard;
 	private boolean termine;
+	private Calendar dateDebut;
 	
 	private static int compteur = 0;
 
@@ -29,6 +30,7 @@ public abstract class Tache implements Serializable {
 		this.categorie = categorie;
 		this.retard = false;
 		this.termine = false;
+		dateDebut=  Calendar.getInstance();
 		if (echeance.after(Calendar.getInstance()))	this.echeance = echeance;
 		else	throw new ExceptionTacheAnterieur(echeance.toString());
 		
@@ -41,6 +43,7 @@ public abstract class Tache implements Serializable {
 		this.categorie = null;
 		this.retard = false;
 		this.termine = false;
+		dateDebut=  Calendar.getInstance();
 		if (echeance.after(Calendar.getInstance()))	this.echeance = echeance;
 		else	throw new ExceptionTacheAnterieur(echeance.toString());
 	}
@@ -54,7 +57,9 @@ public abstract class Tache implements Serializable {
 		 
 	}
 	
-
+	public Calendar getDateDebut(){
+		return dateDebut;
+	}
 	public Categorie getCategorie() {
 		return categorie;
 	}
