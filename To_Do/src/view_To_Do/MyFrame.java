@@ -271,21 +271,23 @@ public class MyFrame extends JFrame{
 			Calendar[] c = b.showChoixDate();
 			ArrayList<Tache> arT = controller.getListBilan(c[0], c[1]);
 			ArrayList<Tache> toDo = new ArrayList<Tache>();
-			int pourcentageRealise = 0;
-			int pourcentageRetard = 0;
-			int pourcentageNonRealise = 0;
+			int nombreTacheRetard = 0;
+			int nombreTacheTermine = 0;
 			
 			for(Tache t : arT){
 				if(!t.isTermine()){
 					toDo.add(t);
-					pourcentageNonRealise++;
+					
 					if(t.isRetard())
-						pourcentageRetard++;
+						nombreTacheRetard++;
 					
 				}else{
-					pourcentageRealise++;
+					nombreTacheTermine++;
+					
 				}
 			}
+			
+			AffichageBilan aB = new AffichageBilan(null, "Bilan de la période", true, toDo, nombreTacheRetard, nombreTacheTermine, toDo.size());
 			
 			
 		}
