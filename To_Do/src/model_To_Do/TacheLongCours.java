@@ -38,8 +38,8 @@ public class TacheLongCours extends Tache {
 	/**
 	 * IsRetard pour un objet TacheLongCours est plus complexe car il suit la règle suivante  :
 	 * Si on nomme d la durée impartie pour une tˆache
-		(diff´erence entre son échéance et sa date de d´ebut), on vérifie l’avancement à chaque pas de d/4 : l’avancement
-		doit être au moins de 25% à d/4, de 50% à d/2, de 75% à 3d/4 et de 100% à d. 
+	 * (différence entre son échéance et sa date de d´ebut), on vérifie l’avancement à chaque pas de d/4 : l’avancement
+	 *	doit être au moins de 25% à d/4, de 50% à d/2, de 75% à 3d/4 et de 100% à d. 
 	 * 
 	 */
 	public boolean isRetarded(){
