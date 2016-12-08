@@ -54,39 +54,6 @@ public abstract class Tache implements Serializable {
 		 
 	}
 	
-	/**
-	 * Permet de recreer l'objet contenu dans le stream envoyé en paramètre
-	 * @param ois
-	 * 	Stream de lecture de l'objet
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	protected void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-		compteur = ois.readInt();
-		this.id = compteur++;
-		this.description = ois.readUTF();
-		this.nom = ois.readUTF();
-		this.echeance = (Calendar)ois.readObject();
-		this.categorie=(Categorie)ois.readObject();
-		this.retard = ois.readBoolean();
-		this.termine = ois.readBoolean();
-	}
-	
-	/**
-	 * Permet d'écrire l'objet dans le stream envoyé en paramètre
-	 * @param oos
-	 * 	Stream d'écriture de l'objet
-	 * @throws IOException
-	 */
-	protected void writeObject(ObjectOutputStream oos) throws IOException{
-		oos.writeInt(id);
-		oos.writeUTF(description);
-		oos.writeUTF(nom);
-		oos.writeObject(echeance);
-		oos.writeObject(categorie);
-		oos.writeBoolean(termine);
-		oos.writeBoolean(retard);
-	}
 
 	public Categorie getCategorie() {
 		return categorie;

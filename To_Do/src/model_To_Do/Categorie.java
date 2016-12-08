@@ -8,7 +8,7 @@ public class Categorie implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private int identifiant;
-	private static int compteur = 0;
+	private static int compteur;
 	private String nom;
 
 	/**
@@ -44,31 +44,9 @@ public class Categorie implements Serializable {
 	 * ToString d'une catégorie
 	 */
 	public String toString() {
-		return "Categorie [identifiant=" + identifiant + ", nom=" + nom + "]";
+		return "Categorie : [identifiant=" + identifiant + ", nom=" + nom + "]";
 	}
 
-	/**
-	 * Permet de recreer l'objet contenu dans le stream envoyé en paramètre
-	 * @param ois
-	 * 	Stream de lecture de l'objet
-	 * @throws IOException
-	 * @throws ClassNotFoundException
-	 */
-	private void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-		compteur = ois.readInt();
-		this.identifiant = compteur++;
-		this.nom = ois.readUTF();
-	}
-	/**
-	 * Permet d'écrire l'objet dans le stream envoyé en paramètre
-	 * @param oos
-	 * 	Stream d'écriture de l'objet
-	 * @throws IOException
-	 */
-	private void writeObject(ObjectOutputStream oos) throws IOException{
-		oos.writeInt(identifiant);
-		oos.writeUTF(nom);
-	}
 	/**
 	 * Deux catégories sont équivalentes quand leurs identifiants sont identiques
 	 * @param c
@@ -78,6 +56,15 @@ public class Categorie implements Serializable {
 	 */
 	public boolean equals(Categorie c){
 		return c.identifiant == this.identifiant;
+	}
+
+	public static void setCompteur(int i) {
+		compteur=i;
+		
+	}
+
+	public static int getCompteur() {
+		return compteur;
 	}
 	
 }

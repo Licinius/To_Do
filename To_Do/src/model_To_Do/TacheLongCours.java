@@ -23,17 +23,7 @@ public class TacheLongCours extends Tache {
 		super(id, nom, echeance);
 		this.granularite = granularite;
 	}
-	protected void readObject(ObjectInputStream ois) throws IOException, ClassNotFoundException {
-		super.readObject(ois);
-		this.granularite = ois.readInt();
-		this.dateDebut = (Calendar) ois.readObject();
-	}
 
-	protected void writeObject(ObjectOutputStream oos) throws IOException{
-		super.writeObject(oos);
-		oos.writeInt(this.granularite);
-		oos.writeObject(dateDebut);
-	}
 	/**
 	 * IsRetard pour un objet TacheLongCours est plus complexe car il suit la règle suivante  :
 	 * Si on nomme d la durée impartie pour une tâche

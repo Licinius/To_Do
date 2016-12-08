@@ -24,23 +24,31 @@ public class ControllerApplication {
 		File fichierIn =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
 		FileInputStream fichierInStream = new FileInputStream(fichierIn);
 		ObjectInputStream ois=null;
+		Categorie.setCompteur(0);
+		int index=0;
 		if(fichierInStream.available()>0){
 			ois = new ObjectInputStream(fichierInStream);
 			while(fichierInStream.available() > 0){
 				listCategorie.add((Categorie)ois.readObject());
+				if (Categorie.getCompteur()<=listCategorie.get(index).getIdentifiant())
+					Categorie.setCompteur(listCategorie.get(index).getIdentifiant()+1);
+				index++;
 			}
 			ois.close();
 		}
 
-
 		//Lecture des taches
 		fichierIn =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		fichierInStream = new FileInputStream(fichierIn);
+		Tache.setCompteur(0);
 		if(fichierInStream.available()>0){
 			ois = new ObjectInputStream(fichierInStream);
 			
 			while(fichierInStream.available() > 0){
 				Tache tmp = (Tache)ois.readObject();
+				if(Tache.getCompteur()<=tmp.getId())
+					Tache.setCompteur(tmp.getId()+1);
+				
 				if(!tmp.isTermine()){
 					tmp.setRetard(tmp.isRetarded());
 					listTache.add(tmp);
