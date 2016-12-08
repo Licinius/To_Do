@@ -14,14 +14,12 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
 
 import model_To_Do.Categorie;
 
 public class SupprimerCategorieDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private int identifiantCategorie = -1;
-	private  JTextField nom;
 	private MyFrame owner;
 
 

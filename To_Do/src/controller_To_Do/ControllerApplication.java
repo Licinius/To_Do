@@ -18,7 +18,6 @@ import view_To_Do.MyFrame;
 public class ControllerApplication {
 	private ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
 	private ArrayList<Tache> listTache = new ArrayList<Tache>();
-	private MyFrame view;
 	public ControllerApplication(MyFrame v) throws IOException, ClassNotFoundException{
 		//Lecture des categories
 		File fichierIn =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
@@ -49,7 +48,6 @@ public class ControllerApplication {
 			ois.close();
 		}
 		updateTache();
-		view = v;
 
 	}
 	
@@ -228,6 +226,7 @@ public class ControllerApplication {
 	 * Supprime tout le contenu des fichier ser en les écrasant
 	 * @throws FileNotFoundException
 	 */
+
 	public void deleteAll() throws FileNotFoundException{
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);

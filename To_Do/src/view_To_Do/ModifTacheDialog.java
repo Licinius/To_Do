@@ -61,7 +61,10 @@ public class ModifTacheDialog extends JDialog {
 		panNom.add(nom);
 
 		JPanel panEcheance = new JPanel();
-		echeance = new JFormattedTextField(info.getEcheance().get(info.getEcheance().DAY_OF_MONTH)+"/"+(info.getEcheance().get(info.getEcheance().MONTH)+1)+"/"+info.getEcheance().get(info.getEcheance().YEAR));	           
+		info.getEcheance();
+		info.getEcheance();
+		info.getEcheance();
+		echeance = new JFormattedTextField(info.getEcheance().get(Calendar.DAY_OF_MONTH)+"/"+(info.getEcheance().get(Calendar.MONTH)+1)+"/"+info.getEcheance().get(Calendar.YEAR));	           
 		echeance.setPreferredSize(new Dimension(100, 25));
 		panEcheance.setPreferredSize(new Dimension(220, 20));
 		panEcheance.setBorder(BorderFactory.createTitledBorder("Echeance de la tache"));
@@ -124,7 +127,6 @@ public class ModifTacheDialog extends JDialog {
 						}
 					}
 					if(values[0]<31 && values[1]<13 && values[2]>1970 && formatValid){
-						Categorie cat = owner.getController().getListCategorie().get(combo.getSelectedIndex());
 						Calendar date = new GregorianCalendar(values[2], values[1]-1, values[0]);//YYYY MM-1 DD
 						if(date.after(Calendar.getInstance())){
 							info.setCategorie(listCat.get(combo.getSelectedIndex()));

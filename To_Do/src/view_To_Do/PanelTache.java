@@ -1,14 +1,10 @@
 package view_To_Do;
 
 import java.awt.BorderLayout;
-import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.FlowLayout;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 
@@ -27,7 +23,7 @@ public class PanelTache extends JPanel {
 	
 	private void initCompo(){
 		Map<String,String> str = t.getInformation();
-		Iterator it =str.keySet().iterator();
+		Iterator<String> it =str.keySet().iterator();
 		JPanel north = new JPanel();
 		String key ="";
 		while(it.hasNext()){

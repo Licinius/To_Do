@@ -23,6 +23,7 @@ import model_To_Do.TachePonctuelle;
 
 public class MyFrame extends JFrame{
 
+	private static final long serialVersionUID = 1L;
 	//	private JMenu[] menuHorizontal = new JMenu[2];
 	private ControllerApplication controller;
 	private JPanel panelTache = new JPanel();
@@ -244,7 +245,6 @@ public class MyFrame extends JFrame{
 			try {
 				controller.modifierCategorie(catInfo);
 			} catch (IOException e1) {
-				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			}
 			printTache();

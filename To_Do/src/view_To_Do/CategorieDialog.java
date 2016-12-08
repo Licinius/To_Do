@@ -7,7 +7,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
-import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -19,7 +18,6 @@ import model_To_Do.Categorie;
 public class CategorieDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	 private Categorie info;
-	  private boolean sendData;
 	  private  JTextField nom;
 	 
 
@@ -37,7 +35,6 @@ public class CategorieDialog extends JDialog {
 	   * 	Une Categorie
 	   */
 	  public Categorie showTacheDialog(){
-	    this.sendData = false;
 	    this.setVisible(true);      
 	    return this.info;      
 	  }
