@@ -44,7 +44,7 @@ public class Categorie implements Serializable {
 	 * ToString d'une catégorie
 	 */
 	public String toString() {
-		return "Categorie [identifiant=" + identifiant + ", nom=" + nom + "]";
+		return "Categorie : [identifiant=" + identifiant + ", nom=" + nom + "]";
 	}
 
 	/**
