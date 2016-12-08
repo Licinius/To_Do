@@ -210,7 +210,7 @@ public class MyFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 
 			BoutonTache bouton= (BoutonTache)e.getSource();
-			ModifTacheDialog t = new ModifTacheDialog(mf,"Créer une nouvelle tache",true, bouton.getTache());		
+			ModifTacheDialog t = new ModifTacheDialog(mf,"Modifier tache " + bouton.getTache().getNom(),true, bouton.getTache());		
 			Tache tacheInfo = t.showModifTacheDialog(); 
 			try {
 				controller.modifierTache(tacheInfo);
