@@ -80,6 +80,13 @@ public class MyFrame extends JFrame{
 		panelTri.add(jbSimple);
 		
 		JButton jbComplexe = new JButton("Tri Complexe");
+		jbComplexe.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e) {
+				tri = EnumTri.Complexe;
+				controller.triComplexe();
+				printTache();
+			}
+		});
 		panelTri.add(jbComplexe);
 		
 		JButton jbPrioritaire = new JButton("Tri Prioritaire");

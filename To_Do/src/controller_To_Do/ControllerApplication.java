@@ -7,6 +7,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -234,6 +235,15 @@ public class ControllerApplication {
 		}
 	}
 	
+	/**
+	 * 
+	 */
+	public void triComplexe(){
+		for(Tache t : listTache){
+			SimpleDateFormat format1 = new SimpleDateFormat("dd-MM-yyyy");
+			System.out.println(t.getNom() + "   :   " + format1.format(t.getNextEcheance().getTime()));
+		}
+	}
 
 	
 	/**

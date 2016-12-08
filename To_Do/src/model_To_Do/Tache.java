@@ -171,6 +171,14 @@ public abstract class Tache implements Serializable {
 		this.termine = termine;
 	}
 	/**
+	 * Retourne la prochaine échéance d'une date
+	 * @return
+	 * 	Un objet calendar correspond à la prochaine échéance d'une date
+	 */
+	public Calendar getNextEcheance(){
+		return this.echeance;
+	}
+	/**
 	 * Retourne une map (ou tableau associatif) d'un objet Tache
 	 * @return
 	 * 	Une LinkedHashMap contenant ["nom","Echeance","Description","Categorie"]

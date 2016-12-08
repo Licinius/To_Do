@@ -81,4 +81,22 @@ public class TacheLongCours extends Tache {
 		return str;
 	}
 	
+	public Calendar getNextEcheance(){
+		long diff =  super.getEcheance().getTimeInMillis()-dateDebut.getTimeInMillis();
+		Calendar res = Calendar.getInstance();
+		if (granularite<25){
+			res.setTimeInMillis(dateDebut.getTimeInMillis()+(diff/4));
+			return res;
+		}
+		if (granularite<50){
+			res.setTimeInMillis(dateDebut.getTimeInMillis()+(diff/2));
+			return res;
+		}
+		if (granularite<75){
+			res.setTimeInMillis(dateDebut.getTimeInMillis()+(3*diff/2));
+			return res;
+		}
+		return super.getEcheance();
+	}
+	
 }
