@@ -28,7 +28,7 @@ public class MyFrame extends JFrame{
 	private ControllerApplication controller;
 	private JPanel panelTache = new JPanel();
 	private JScrollPane scroll ;
-	private JButton[] tabButtonMenu = new JButton[4];
+	private JButton[] tabButtonMenu = new JButton[5];
 	private EnumTri tri;
 	private JPanel panelTri = new JPanel();
 	
@@ -50,7 +50,8 @@ public class MyFrame extends JFrame{
 		tabButtonMenu[2].addActionListener(new ModifCatListener(this));
 		tabButtonMenu[3]=new JButton("Supprimer catégorie");
 		tabButtonMenu[3].addActionListener(new SupprimerCategorie(this));
-
+		tabButtonMenu[4] = new JButton("Bilan");
+		tabButtonMenu[4].addActionListener(new Bilan());
 		for (int i = 0; i < tabButtonMenu.length; i++) {
 			jmb.add("North",tabButtonMenu[i]);
 		}
@@ -255,6 +256,17 @@ public class MyFrame extends JFrame{
 				e1.printStackTrace();
 			}
 			printTache();
+		}
+
+	}
+	/**
+	 * Permet d'afficher un bilan
+	 * @author Marvin
+	 *
+	 */
+	class Bilan implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			
 		}
 
 	}
