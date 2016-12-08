@@ -44,11 +44,14 @@ public class TacheLongCours extends Tache {
 	 */
 	public boolean isRetarded(){
 		long diff =  super.getEcheance().getTimeInMillis()-dateDebut.getTimeInMillis();
-		long restant = super.getEcheance().getTimeInMillis()-Calendar.getInstance().getTimeInMillis();
-		if(restant >diff/4){
+		long restant = Calendar.getInstance().getTimeInMillis()-dateDebut.getTimeInMillis();
+		System.out.println(diff + "milliscecon");
+		if(restant <diff/4){
+			System.out.println("inférieur<diff/4");
 			return true;
 		}
 		if (restant>diff/2){
+			System.out.println("supérieur<diff/4");
 			return granularite>=25;
 				
 		}
