@@ -38,11 +38,13 @@ public class ControllerApplication {
 		fichierInStream = new FileInputStream(fichierIn);
 		if(fichierInStream.available()>0){
 			ois = new ObjectInputStream(fichierInStream);
+			
 			while(fichierInStream.available() > 0){
 				Tache tmp = (Tache)ois.readObject();
-				if(!tmp.isTermine())
+				if(!tmp.isTermine()){
 					tmp.setRetard(tmp.isRetarded());
 					listTache.add(tmp);
+				}
 			}
 			ois.close();
 		}

@@ -85,7 +85,6 @@ public abstract class Tache implements Serializable {
 		oos.writeInt(id);
 		oos.writeUTF(description);
 		oos.writeUTF(nom);
-		System.out.println("Je plante là");
 		oos.writeObject(echeance);
 		oos.writeObject(categorie);
 		oos.writeBoolean(termine);
