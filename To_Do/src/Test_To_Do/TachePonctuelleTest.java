@@ -98,7 +98,7 @@ public class TachePonctuelleTest {
 		tache.setEcheance(date);
 	}
 
-	@Ignore @Test
+	@Test
 	public void testGetId() {
 		assertEquals(tache.getId(), 0);
 	}

@@ -36,7 +36,7 @@ public class CategorieTest {
 		this.cat.setNom("nomCategorie");
 	}
 
-	@Ignore @Test 
+	@Test 
 	public void testGetIdentifiant() {
 		System.out.println(this.cat.getIdentifiant());
 		assertEquals(this.cat.getIdentifiant(), 0);
