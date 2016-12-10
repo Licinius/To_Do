@@ -52,7 +52,7 @@ public class SupprimerCategorieDialog extends JDialog {
 		}
 		JComboBox<String> combo = new JComboBox<String>(tab);
 		combo.setPreferredSize(new Dimension(100, 20));
-		JLabel oldCat = new JLabel("Catégorie à modifier :");
+		JLabel oldCat = new JLabel("Catégorie à supprimer :");
 		jp1.add(oldCat);
 		jp1.add(combo);
 		JPanel content = new JPanel();
