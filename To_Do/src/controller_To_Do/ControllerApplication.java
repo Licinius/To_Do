@@ -284,7 +284,8 @@ public class ControllerApplication {
 	 */
 	public void modifierGranularite(TacheLongCours tache) throws IOException{
 		tache.setGranularite(tache.getGranularite()+5);
-		tache.setRetard(tache.isRetarded());
+		if (tache.getGranularite() !=100)
+			tache.setRetard(tache.isRetarded());
 
 		updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		
