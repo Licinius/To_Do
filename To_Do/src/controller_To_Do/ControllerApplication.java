@@ -143,7 +143,7 @@ public class ControllerApplication {
 	 * Met à jour le fichier tache.ser
 	 * @throws IOException
 	 */
-	public void updateTache() throws IOException{
+	private void updateTache() throws IOException{
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
 		ObjectOutputStream oos=null;
@@ -157,7 +157,7 @@ public class ControllerApplication {
 		oos.close();
 	}
 	
-	public void updateCategorie() throws IOException{
+	private void updateCategorie() throws IOException{
 		File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
 		ObjectOutputStream oos=null;
@@ -298,14 +298,7 @@ public class ControllerApplication {
 	 */
 	public void modifierCategorie(Categorie catInfo) throws IOException {
 		if(catInfo !=null){
-			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Categorie cat : this.listCategorie){
-				oos.writeObject(cat); //écriture des categories dans le fichier "categorie.ser"
-			}
-			oos.close();
+			updateCategorie();
 			
 			//Modification de la catégorie sur toutes les taches qui la possède
 			for(Tache t : this.listTache){
@@ -329,14 +322,6 @@ public class ControllerApplication {
 	 */
 	public void modifierTache(Tache tacheInfo) throws IOException {
 		if(tacheInfo !=null){//Verifie si la tache n'est pas null
-			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Tache tache : this.listTache){
-				oos.writeObject(tache); //écriture des taches dans le fichier "tache.ser"
-			}
-			oos.close();
 			updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		}
 	}
