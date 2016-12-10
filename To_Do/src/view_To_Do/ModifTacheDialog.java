@@ -31,7 +31,6 @@ public class ModifTacheDialog extends JDialog {
 	private JTextField description;
 	private MyFrame owner;
 
-
 	public ModifTacheDialog(MyFrame parent, String title, boolean modal, Tache old){
 		super(parent, title, modal);
 		owner = parent;
@@ -128,7 +127,7 @@ public class ModifTacheDialog extends JDialog {
 					}
 					if(values[0]<31 && values[1]<13 && values[2]>1970 && formatValid){
 						Calendar date = new GregorianCalendar(values[2], values[1]-1, values[0]);//YYYY MM-1 DD
-						if(date.after(Calendar.getInstance())){
+						if( date.equals(info.getEcheance())|| date.after(Calendar.getInstance())){
 							info.setCategorie(listCat.get(combo.getSelectedIndex()));
 							info.setDescription(description.getText());
 							info.setEcheance(new GregorianCalendar(values[2], values[1]-1, values[0]));
