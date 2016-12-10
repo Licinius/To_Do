@@ -47,7 +47,6 @@ public class ModifCategorieDialog extends JDialog {
 		panCat.setPreferredSize(new Dimension(220, 150));
 		panCat.setBorder(BorderFactory.createTitledBorder("Nom de la categorie"));
 		panCat.setLayout(new BoxLayout(panCat, BoxLayout.PAGE_AXIS));
-
 		JPanel jp1 = new JPanel();
 		ArrayList<Categorie> listCat = owner.getController().getListCategorie();
 		String[] tab = new String[listCat.size()];
@@ -72,7 +71,9 @@ public class ModifCategorieDialog extends JDialog {
 		panCat.add(jp2);
 
 		JPanel content = new JPanel();
-		content.setBackground(Color.white);
+		content.setBackground(Color.white);	
+		content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
+		content.setSize(700, 600);
 		content.add(panCat);
 
 		JPanel control = new JPanel();

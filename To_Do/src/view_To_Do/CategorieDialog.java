@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
@@ -54,6 +55,7 @@ public class CategorieDialog extends JDialog {
 
 		    JPanel content = new JPanel();
 		    content.setBackground(Color.white);
+			content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
 		    content.add(panNom);
 
 		    JPanel control = new JPanel();

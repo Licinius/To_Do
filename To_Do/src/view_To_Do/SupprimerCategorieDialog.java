@@ -59,6 +59,7 @@ public class SupprimerCategorieDialog extends JDialog {
 		content.setBackground(Color.white);
 		panCat.add(jp1);
 		content.add(panCat);
+		content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
 		
 		JPanel control = new JPanel();
 		JButton okBouton = new JButton("OK");

@@ -50,6 +50,7 @@ public class BilanDialog  extends JDialog {
 		panDate.setLayout(new BoxLayout(panDate, BoxLayout.PAGE_AXIS));
 		JPanel content = new JPanel();
 		content.setBackground(Color.white);
+		content.setLayout(new BoxLayout(content, BoxLayout.PAGE_AXIS));
 		content.add(panDate);
 		
 		JPanel panDateDebut = new JPanel();
@@ -83,7 +84,7 @@ public class BilanDialog  extends JDialog {
 		panDateFin.add(dateFinLabel);
 		panDateFin.add(dateFin);
 		panDate.add(panDateFin);
-		
+
 		JPanel control = new JPanel();
 		JButton okBouton = new JButton("OK");
 		okBouton.addActionListener(new ActionListener(){
