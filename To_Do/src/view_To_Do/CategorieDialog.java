@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -17,72 +18,72 @@ import model_To_Do.Categorie;
 
 public class CategorieDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
-	 private Categorie info;
-	  private  JTextField nom;
-	 
+	private Categorie info;
+	private MyFrame owner;
+	private  JTextField nom;
 
-	  public CategorieDialog(MyFrame parent, String title, boolean modal){
-	    super(parent, title, modal);
-	    this.setSize(550, 270);
-	    this.setLocationRelativeTo(null);
-	    this.setResizable(false);
-	    this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-	    this.initComponent();
-	  }
-	  /**
-	   * Envoie les informations d'une catégorie une fois fini
-	   * @return
-	   * 	Une Categorie
-	   */
-	  public Categorie showTacheDialog(){
-	    this.setVisible(true);      
-	    return this.info;      
-	  }
-	  /**
-	   * Initialise les composants de la fenêtre de dialogue 
-	   */
-	  private void initComponent(){
-		    //Le nom
-		  	JPanel panNom = new JPanel();
-		    nom = new JTextField();
-		    nom.setPreferredSize(new Dimension(100, 25));
-		    panNom.setPreferredSize(new Dimension(220, 60));
-		    panNom.setBorder(BorderFactory.createTitledBorder("Nom de la categorie"));
-		    JLabel nomLabel = new JLabel("Saisir un nom :");
-		    panNom.add(nomLabel);
-		    panNom.add(nom);
 
-		    JPanel content = new JPanel();
-		    content.setBackground(Color.white);
-		    content.add(panNom);
+	public CategorieDialog(MyFrame parent, String title, boolean modal){
+		super(parent, title, modal);
+		owner = parent;
+		this.setSize(550, 270);
+		this.setLocationRelativeTo(null);
+		this.setResizable(false);
+		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+		this.initComponent();
+		this.setVisible(true);
+	}
 
-		    JPanel control = new JPanel();
-		    JButton okBouton = new JButton("OK");
-		    
-		    okBouton.addActionListener(new ActionListener(){
-		      public void actionPerformed(ActionEvent arg0) {
-		    	  if(!nom.getText().trim().isEmpty()){
-		    		  info = new Categorie(nom.getText());
-		    		  setVisible(false);
-		    	  }
-		    	  else{
-		    		  nom.setBackground(Color.PINK);
-		    	  }
-		        
-		      }
-		      }      
-		    );
+	/**
+	 * Initialise les composants de la fenêtre de dialogue 
+	 */
+	private void initComponent(){
+		//Le nom
+		JPanel panNom = new JPanel();
+		nom = new JTextField();
+		nom.setPreferredSize(new Dimension(100, 25));
+		panNom.setPreferredSize(new Dimension(220, 60));
+		panNom.setBorder(BorderFactory.createTitledBorder("Nom de la categorie"));
+		JLabel nomLabel = new JLabel("Saisir un nom :");
+		panNom.add(nomLabel);
+		panNom.add(nom);
 
-		    JButton cancelBouton = new JButton("Annuler");
-		    cancelBouton.addActionListener(new ActionListener(){
-		      public void actionPerformed(ActionEvent arg0) {
-		        setVisible(false);
-		      }      
-		    });
+		JPanel content = new JPanel();
+		content.setBackground(Color.white);
+		content.add(panNom);
 
-		    control.add(okBouton);
-		    control.add(cancelBouton);
-		    this.getContentPane().add(content, BorderLayout.CENTER);
-		    this.getContentPane().add(control, BorderLayout.SOUTH);
-		  }  
+		JPanel control = new JPanel();
+		JButton okBouton = new JButton("OK");
+
+		okBouton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				if(!nom.getText().trim().isEmpty()){
+					info = new Categorie(nom.getText());
+					try {
+						owner.getController().createCategorie(info);
+					} catch (IOException e) {
+						e.printStackTrace();
+					}
+					setVisible(false);
+				}
+				else{
+					nom.setBackground(Color.PINK);
+				}
+
+			}
+		}      
+				);
+
+		JButton cancelBouton = new JButton("Annuler");
+		cancelBouton.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent arg0) {
+				setVisible(false);
+			}      
+		});
+
+		control.add(okBouton);
+		control.add(cancelBouton);
+		this.getContentPane().add(content, BorderLayout.CENTER);
+		this.getContentPane().add(control, BorderLayout.SOUTH);
+	}  
 }

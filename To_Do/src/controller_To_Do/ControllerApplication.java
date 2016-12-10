@@ -60,7 +60,8 @@ public class ControllerApplication {
 			}
 			ois.close();
 		}
-		updateTache();
+		
+		updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 
 	}
 	
@@ -81,14 +82,7 @@ public class ControllerApplication {
 	public void createCategorie(Categorie categorie) throws IOException{
 		if(categorie!=null){
 			listCategorie.add(categorie);
-			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Categorie cat : this.listCategorie){
-				oos.writeObject(cat); //écriture des categories dans le fichier "categorie.ser"
-			}
-			oos.close();
+			updateCategorie(); //mise à jour des categories dans le fichier "categorie.ser"
 		}
 	}
 
@@ -101,14 +95,7 @@ public class ControllerApplication {
 	public void deleteCategorie(Categorie categorie) throws IOException{
 		if(categorie!=null){
 			listCategorie.remove(categorie);
-			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Categorie cat : this.listCategorie){
-				oos.writeObject(cat);
-			}
-			oos.close();
+			updateCategorie(); //mise à jour des categories dans le fichier "categorie.ser"
 			
 			//Suppression de la catégorie sur toutes les taches qui la possède
 			for(Tache t : this.listTache){
@@ -138,14 +125,7 @@ public class ControllerApplication {
 				break;
 			}
 		}
-		File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
-		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-		ObjectOutputStream oos=null;
-		oos = new ObjectOutputStream(fichierOutStream);
-		for(Categorie cat : this.listCategorie){
-			oos.writeObject(cat);
-		}
-		oos.close();
+		updateCategorie(); //mise à jour des categories dans le fichier "categorie.ser"
 		
 		//Suppression de la catégorie sur toutes les taches qui la possède
 		for(Tache t : this.listTache){
@@ -165,7 +145,7 @@ public class ControllerApplication {
 	 * Met à jour le fichier tache.ser
 	 * @throws IOException
 	 */
-	private void updateTache() throws IOException{
+	public void updateTache() throws IOException{
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
 		ObjectOutputStream oos=null;
@@ -296,60 +276,24 @@ public class ControllerApplication {
 	public void modifierGranularite(TacheLongCours tache) throws IOException{
 		tache.setGranularite(tache.getGranularite()+5);
 		tache.setRetard(tache.isRetarded());
-
+		
 		updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		
 	}
 	
 	/**
-	 * Permet de modifier une categorie 
-	 * @param catInfo
-	 * 	Categorie que l'on souhaite modifier
+	 * Met à jour le fichier categorie.ser
 	 * @throws IOException
 	 */
-	public void modifierCategorie(Categorie catInfo) throws IOException {
-		if(catInfo !=null){
-			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Categorie cat : this.listCategorie){
-				oos.writeObject(cat); //écriture des categories dans le fichier "categorie.ser"
-			}
-			oos.close();
-			
-			//Modification de la catégorie sur toutes les taches qui la possède
-			for(Tache t : this.listTache){
-				if(t.getCategorie() != null){
-					if(t.getCategorie().getIdentifiant() == catInfo.getIdentifiant())	t.setCategorie(catInfo);
-				}
-			}
-			for(Tache t : this.listTacheTermine){
-				if(t.getCategorie() != null){
-					if(t.getCategorie().getIdentifiant() == catInfo.getIdentifiant())	t.setCategorie(catInfo);
-				}
-			}
-			
-			updateTache(); //mise à jour des taches dans le fichier "tache.ser"
+	public void updateCategorie() throws IOException{
+		File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+		ObjectOutputStream oos=null;
+		oos = new ObjectOutputStream(fichierOutStream);
+		for(Categorie cat : this.listCategorie){
+			oos.writeObject(cat); //écriture des categories dans le fichier "categorie.ser"
 		}
-	}
-	/**
-	 * Permet de modifier une tache dans le fichier ser
-	 * @param tacheInfo tache que l'on souhaite modifier
-	 * @throws IOException
-	 */
-	public void modifierTache(Tache tacheInfo) throws IOException {
-		if(tacheInfo !=null){//Verifie si la tache n'est pas null
-			File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Tache tache : this.listTache){
-				oos.writeObject(tache); //écriture des taches dans le fichier "tache.ser"
-			}
-			oos.close();
-			updateTache(); //mise à jour des taches dans le fichier "tache.ser"
-		}
+		oos.close();
 	}
 	
 	public ArrayList<Tache> getListBilan(Calendar c1, Calendar c2){
