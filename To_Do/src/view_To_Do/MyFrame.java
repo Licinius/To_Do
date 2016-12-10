@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import controller_To_Do.ControllerApplication;
+import model_To_Do.Categorie;
 import model_To_Do.Tache;
 import model_To_Do.TacheLongCours;
 import model_To_Do.TachePonctuelle;
@@ -40,14 +41,13 @@ public class MyFrame extends JFrame{
 		setTitle("Ma liste"); 
 		setLayout(new BoxLayout(getContentPane(), BoxLayout.PAGE_AXIS));
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setVisible(true);
 
 		JMenuBar jmb = new JMenuBar();
 		jmb.setLayout(new GridLayout());
 		tabButtonMenu[0] = new JButton("Créer tâche");
 		tabButtonMenu[0].addActionListener(new creerTacheListener(this));
 		tabButtonMenu[1] = new JButton("Créer catégorie");
-		tabButtonMenu[1].addActionListener(new creerCategorieListener(this));
+		tabButtonMenu[1].addActionListener(new creerCategorieListener());
 		tabButtonMenu[2] = new JButton("Modifier catégorie");
 		tabButtonMenu[2].addActionListener(new ModifCatListener(this));
 		tabButtonMenu[3]=new JButton("Supprimer catégorie");
@@ -156,9 +156,10 @@ public class MyFrame extends JFrame{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			new TacheDialog(mf,"Créer une nouvelle tache",true);		 
+			TacheDialog t = new TacheDialog(mf,"Créer une nouvelle tache",true);		
+			Tache tacheInfo = t.showTacheDialog(); 
 			try {
-				controller.updateTache();
+				controller.createTache(tacheInfo);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -184,17 +185,12 @@ public class MyFrame extends JFrame{
 	 *
 	 */
 	class creerCategorieListener implements ActionListener{
-		
-		private MyFrame mf;
 
-		public creerCategorieListener(MyFrame myFrame) {
-			mf = myFrame;
-		}
-		
 		public void actionPerformed(ActionEvent e) {
-			new CategorieDialog(mf,"Créer une nouvelle catégorie",true);		
+			CategorieDialog t = new CategorieDialog(null,"Créer une nouvelle catégorie",true);		
+			Categorie categorieInfo = t.showTacheDialog();
 			try {
-				controller.updateCategorie();
+				controller.createCategorie(categorieInfo);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -217,9 +213,10 @@ public class MyFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 
 			BoutonTache bouton= (BoutonTache)e.getSource();
-			new ModifTacheDialog(mf,"Modifier tache " + bouton.getTache().getNom(),true, bouton.getTache()); 
+			ModifTacheDialog t = new ModifTacheDialog(mf,"Modifier tache " + bouton.getTache().getNom(),true, bouton.getTache());		
+			Tache tacheInfo = t.showModifTacheDialog(); 
 			try {
-				controller.updateTache();
+				controller.modifierTache(tacheInfo);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -253,9 +250,10 @@ public class MyFrame extends JFrame{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			new ModifCategorieDialog(mf,"Modifier nom categorie",true);
+			ModifCategorieDialog c = new ModifCategorieDialog(mf,"Modifier nom categorie",true);		
+			Categorie catInfo = c.showModifDialog();
 			try {
-				controller.updateCategorie();
+				controller.modifierCategorie(catInfo);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -290,7 +288,7 @@ public class MyFrame extends JFrame{
 				}
 			}
 			
-			new AffichageBilan(null, "Bilan de la période", true, toDo, nombreTacheRetard, nombreTacheTermine, toDo.size());
+			AffichageBilan aB = new AffichageBilan(null, "Bilan de la période", true, toDo, nombreTacheRetard, nombreTacheTermine, toDo.size());
 			
 			
 		}
@@ -310,9 +308,10 @@ public class MyFrame extends JFrame{
 		}
 
 		public void actionPerformed(ActionEvent e) {
-			new SupprimerCategorieDialog(mf," Supprimer categorie",true);
+			SupprimerCategorieDialog c = new SupprimerCategorieDialog(mf," Supprimer categorie",true);		
+			int idCat= c.showModifDialog();
 			try {
-				controller.updateCategorie();
+				controller.deleteCategorie(idCat);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -383,6 +382,7 @@ public class MyFrame extends JFrame{
 	}
 
 	public static void main(String[] args) {
-		new MyFrame();
+		MyFrame f = new MyFrame();
+		f.setVisible(true);
 	}
 }

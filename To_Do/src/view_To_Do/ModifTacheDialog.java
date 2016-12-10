@@ -41,7 +41,11 @@ public class ModifTacheDialog extends JDialog {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.initComponent();
-		this.setVisible(true);
+	}
+	
+	public Tache showModifTacheDialog(){
+		this.setVisible(true);      
+		return this.info;      
 	}
 
 	private void initComponent(){

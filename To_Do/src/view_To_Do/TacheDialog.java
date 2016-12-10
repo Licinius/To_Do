@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -46,7 +45,11 @@ public class TacheDialog extends JDialog {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.initComponent();
-		this.setVisible(true);
+	}
+	
+	public Tache showTacheDialog(){
+		this.setVisible(true);      
+		return this.info;      
 	}
 
 	private void initComponent(){
@@ -145,9 +148,8 @@ public class TacheDialog extends JDialog {
 							if(getType().equals("Normale")){
 								try {
 									info = new TachePonctuelle(nom.getText(),description.getText(),date,cat);
-									owner.getController().createTache(info);
 									setVisible(false);
-								} catch (ExceptionTacheAnterieur | IOException e) {
+								} catch (ExceptionTacheAnterieur e) {
 									e.printStackTrace();
 								}
 							}else{

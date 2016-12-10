@@ -33,9 +33,12 @@ public class ModifCategorieDialog extends JDialog {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.initComponent();
-		this.setVisible(true);
 	}
 
+	public Categorie showModifDialog(){
+		this.setVisible(true);      
+		return info;      
+	}
 	/**
 	 * Initialise les composants de la boîte de dialogue ModifCategorie
 	 */

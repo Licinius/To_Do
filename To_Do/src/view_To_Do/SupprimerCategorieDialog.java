@@ -5,7 +5,6 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
@@ -32,7 +31,11 @@ public class SupprimerCategorieDialog extends JDialog {
 		this.setResizable(false);
 		this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		this.initComponent();
-		this.setVisible(true);     
+	}
+
+	public int showModifDialog(){
+		this.setVisible(true);      
+		return  identifiantCategorie;      
 	}
 
 	private void initComponent(){
@@ -61,13 +64,10 @@ public class SupprimerCategorieDialog extends JDialog {
 		JButton okBouton = new JButton("OK");
 
 		okBouton.addActionListener(new ActionListener(){
-			public void actionPerformed(ActionEvent arg0) {
-				try {
-					owner.getController().deleteCategorie(owner.getController().getListCategorie().get(combo.getSelectedIndex()));
-				} catch (IOException e) {
-					e.printStackTrace();
-				}
+			public void actionPerformed(ActionEvent arg0) {	
+				identifiantCategorie = owner.getController().getListCategorie().get(combo.getSelectedIndex()).getIdentifiant();
 				setVisible(false);
+				
 			}
 		});
 
