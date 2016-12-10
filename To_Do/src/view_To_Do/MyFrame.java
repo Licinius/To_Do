@@ -270,26 +270,27 @@ public class MyFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			BilanDialog b = new BilanDialog(null,"Editer un bilan",true);
 			Calendar[] c = b.showChoixDate();
-			ArrayList<Tache> arT = controller.getListBilan(c[0], c[1]);
-			ArrayList<Tache> toDo = new ArrayList<Tache>();
-			int nombreTacheRetard = 0;
-			int nombreTacheTermine = 0;
-			
-			for(Tache t : arT){
-				if(!t.isTermine()){
-					toDo.add(t);
-					
-					if(t.isRetard())
-						nombreTacheRetard++;
-					
-				}else{
-					nombreTacheTermine++;
-					
+			if(c[1]!=null && c[0]!= null){
+				ArrayList<Tache> arT = controller.getListBilan(c[0], c[1]);
+				ArrayList<Tache> toDo = new ArrayList<Tache>();
+				int nombreTacheRetard = 0;
+				int nombreTacheTermine = 0;
+				
+				for(Tache t : arT){
+					if(!t.isTermine()){
+						toDo.add(t);
+						
+						if(t.isRetard())
+							nombreTacheRetard++;
+						
+					}else{
+						nombreTacheTermine++;
+						
+					}
 				}
+				
+				AffichageBilan aB = new AffichageBilan(null, "Bilan de la période", true, toDo, nombreTacheRetard, nombreTacheTermine, toDo.size());
 			}
-			
-			AffichageBilan aB = new AffichageBilan(null, "Bilan de la période", true, toDo, nombreTacheRetard, nombreTacheTermine, toDo.size());
-			
 			
 		}
 

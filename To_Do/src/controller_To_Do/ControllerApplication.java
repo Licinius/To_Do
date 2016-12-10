@@ -81,14 +81,7 @@ public class ControllerApplication {
 	public void createCategorie(Categorie categorie) throws IOException{
 		if(categorie!=null){
 			listCategorie.add(categorie);
-			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Categorie cat : this.listCategorie){
-				oos.writeObject(cat); //écriture des categories dans le fichier "categorie.ser"
-			}
-			oos.close();
+			updateCategorie();
 		}
 	}
 
@@ -101,15 +94,7 @@ public class ControllerApplication {
 	public void deleteCategorie(Categorie categorie) throws IOException{
 		if(categorie!=null){
 			listCategorie.remove(categorie);
-			File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
-			FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-			ObjectOutputStream oos=null;
-			oos = new ObjectOutputStream(fichierOutStream);
-			for(Categorie cat : this.listCategorie){
-				oos.writeObject(cat);
-			}
-			oos.close();
-			
+			updateCategorie();
 			//Suppression de la catégorie sur toutes les taches qui la possède
 			for(Tache t : this.listTache){
 				if(t.getCategorie() != null){
@@ -138,15 +123,8 @@ public class ControllerApplication {
 				break;
 			}
 		}
-		File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
-		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
-		ObjectOutputStream oos=null;
-		oos = new ObjectOutputStream(fichierOutStream);
-		for(Categorie cat : this.listCategorie){
-			oos.writeObject(cat);
-		}
-		oos.close();
-		
+
+		updateCategorie();
 		//Suppression de la catégorie sur toutes les taches qui la possède
 		for(Tache t : this.listTache){
 			if(t.getCategorie() != null){
@@ -165,7 +143,7 @@ public class ControllerApplication {
 	 * Met à jour le fichier tache.ser
 	 * @throws IOException
 	 */
-	private void updateTache() throws IOException{
+	public void updateTache() throws IOException{
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
 		ObjectOutputStream oos=null;
@@ -175,6 +153,17 @@ public class ControllerApplication {
 		}
 		for(Tache t: this.listTacheTermine){
 			oos.writeObject(t); //écriture des taches terminées dans le fichier "tache.ser"
+		}
+		oos.close();
+	}
+	
+	public void updateCategorie() throws IOException{
+		File fichierOut =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
+		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
+		ObjectOutputStream oos=null;
+		oos = new ObjectOutputStream(fichierOutStream);
+		for(Categorie cat : this.listCategorie){
+			oos.writeObject(cat);
 		}
 		oos.close();
 	}
@@ -247,7 +236,7 @@ public class ControllerApplication {
 	}
 	
 	/**
-	 * Tri la liste de façon simplifier en mettant les taches les plus urgentes en premier
+	 * Tri la liste de façon simplifier en mettant les taches les plus urgentes en première
 	 * Complexité : O(n²)
 	 */
 	public void triSimple() {
