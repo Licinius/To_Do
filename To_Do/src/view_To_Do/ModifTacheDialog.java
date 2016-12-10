@@ -79,8 +79,10 @@ public class ModifTacheDialog extends JDialog {
 		int index = 0;
 		for (int i = 0; i < listCat.size(); i++) {
 			tab[i] = listCat.get(i).getNom();
-			if (listCat.get(i).getIdentifiant() == info.getCategorie().getIdentifiant()) {
-				index = i;
+			if(info.getCategorie()!=null){
+				if (listCat.get(i).getIdentifiant() == info.getCategorie().getIdentifiant()) {
+					index = i;
+				}
 			}
 		}
 		JComboBox<String> combo = new JComboBox<String>(tab);
