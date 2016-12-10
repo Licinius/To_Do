@@ -7,7 +7,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
@@ -17,9 +16,11 @@ import model_To_Do.Tache;
 import model_To_Do.TacheLongCours;
 
 public class ControllerApplication {
+	
 	private ArrayList<Categorie> listCategorie = new ArrayList<Categorie>();
 	private ArrayList<Tache> listTache = new ArrayList<Tache>();
 	private ArrayList<Tache> listTacheTermine = new ArrayList<Tache>();
+
 	public ControllerApplication() throws IOException, ClassNotFoundException{
 		//Lecture des categories
 		File fichierIn =  new File("save"+ File.separator +"categorie.ser") ;// ouverture d'un flux sur un fichier
@@ -29,7 +30,7 @@ public class ControllerApplication {
 		int index=0;
 		if(fichierInStream.available()>0){
 			ois = new ObjectInputStream(fichierInStream);
-			while(fichierInStream.available() > 0){
+			while(fichierInStream.available() > 0) {
 				listCategorie.add((Categorie)ois.readObject());
 				if (Categorie.getCompteur()<=listCategorie.get(index).getIdentifiant())
 					Categorie.setCompteur(listCategorie.get(index).getIdentifiant()+1);
@@ -85,7 +86,7 @@ public class ControllerApplication {
 			ObjectOutputStream oos=null;
 			oos = new ObjectOutputStream(fichierOutStream);
 			for(Categorie cat : this.listCategorie){
-				oos.writeObject(cat);
+				oos.writeObject(cat); //écriture des categories dans le fichier "categorie.ser"
 			}
 			oos.close();
 		}
@@ -108,14 +109,22 @@ public class ControllerApplication {
 				oos.writeObject(cat);
 			}
 			oos.close();
+			
+			//Suppression de la catégorie sur toutes les taches qui la possède
 			for(Tache t : this.listTache){
 				if(t.getCategorie() != null){
 					if(t.getCategorie().equals(categorie))	t.setCategorie(null);
 				}
 			}
-			updateTache();
+			for(Tache t : this.listTacheTermine){
+				if(t.getCategorie() != null){
+					if(t.getCategorie().equals(categorie))	t.setCategorie(null);
+				}
+			}
+			updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		}
 	}
+	
 	/**
 	 * Supprime une categorie du fichier ser à l'aide de son identifiant
 	 * @param id
@@ -137,13 +146,21 @@ public class ControllerApplication {
 			oos.writeObject(cat);
 		}
 		oos.close();
+		
+		//Suppression de la catégorie sur toutes les taches qui la possède
 		for(Tache t : this.listTache){
 			if(t.getCategorie() != null){
 				if(t.getCategorie().getIdentifiant() == id)	t.setCategorie(null);
 			}
 		}
-		updateTache();
+		for(Tache t : this.listTacheTermine){
+			if(t.getCategorie() != null){
+				if(t.getCategorie().getIdentifiant() == id)	t.setCategorie(null);
+			}
+		}
+		updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 	}
+	
 	/**
 	 * Met à jour le fichier tache.ser
 	 * @throws IOException
@@ -154,10 +171,10 @@ public class ControllerApplication {
 		ObjectOutputStream oos=null;
 		oos = new ObjectOutputStream(fichierOutStream);
 		for(Tache t : this.listTache){
-			oos.writeObject(t);
+			oos.writeObject(t); //écriture des taches dans le fichier "tache.ser"
 		}
 		for(Tache t: this.listTacheTermine){
-			oos.writeObject(t);
+			oos.writeObject(t); //écriture des taches terminées dans le fichier "tache.ser"
 		}
 		oos.close();
 	}
@@ -171,7 +188,7 @@ public class ControllerApplication {
 	public void createTache(Tache tache) throws IOException{
 		if(tache !=null){
 			listTache.add(tache);
-			updateTache();
+			updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		}
 	}
 	
@@ -184,7 +201,7 @@ public class ControllerApplication {
 	public void deleteTache(Tache tache) throws IOException{
 		if(tache!=null){
 			listTache.remove(tache);
-			updateTache();
+			updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		}
 	}
 	
@@ -196,13 +213,13 @@ public class ControllerApplication {
 	 */
 	public void deleteTache(int id) throws IOException{
 		if(id>=0){
-			for (int i = 0; i < listCategorie.size(); i++) {
+			for (int i = 0; i < listTache.size(); i++) {
 				if (listTache.get(i).getId() == id) {
 					listTache.remove(listTache.get(i));
 					break;
 				}
 			}
-			updateTache();
+			updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		}
 	}
 
@@ -220,7 +237,6 @@ public class ControllerApplication {
 	 * Supprime tout le contenu des fichier ser en les écrasant
 	 * @throws FileNotFoundException
 	 */
-
 	public void deleteAll() throws FileNotFoundException{
 		File fichierOut =  new File("save"+ File.separator +"tache.ser") ;// ouverture d'un flux sur un fichier
 		FileOutputStream fichierOutStream = new FileOutputStream(fichierOut);
@@ -231,13 +247,13 @@ public class ControllerApplication {
 	}
 	
 	/**
-	 * Tri la liste de façon simplifier en mettant les taches les plus urgents en premier
+	 * Tri la liste de façon simplifier en mettant les taches les plus urgentes en premier
 	 * Complexité : O(n²)
 	 */
 	public void triSimple() {
 		for (int i = 0; i < listTache.size()-1; i++) {
 			for (int j = i+1; j < listTache.size(); j++) {
-				if (listTache.get(i).getJourRestant() > listTache.get(j).getJourRestant()) {
+				if (listTache.get(i).getEcheance().after(listTache.get(j).getEcheance())) {
 					Collections.swap(listTache, i, j);
 				}
 			}
@@ -258,7 +274,6 @@ public class ControllerApplication {
 		}
 	}
 
-	
 	/**
 	 * Set tache.termine a true et supprime de list
 	 * @param tache
@@ -269,19 +284,20 @@ public class ControllerApplication {
 		tache.setTermine(true);
 		listTache.remove(tache);
 		listTacheTermine.add(tache);
-		updateTache();
+		updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 	}
+	
 	/**
 	 * Permet de modifier dans le fichier .ser la granularite d'une tache au long cours
 	 * @param tache
 	 * 	Tache au long cours que l'on souhaite modifier
 	 * @throws IOException
 	 */
-	public void modifierGranularite(Tache tache) throws IOException{
-		((TacheLongCours) tache).setGranularite(((TacheLongCours) tache).getGranularite()+5);
+	public void modifierGranularite(TacheLongCours tache) throws IOException{
+		tache.setGranularite(tache.getGranularite()+5);
 		tache.setRetard(tache.isRetarded());
 
-		updateTache();
+		updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		
 	}
 	
@@ -298,15 +314,23 @@ public class ControllerApplication {
 			ObjectOutputStream oos=null;
 			oos = new ObjectOutputStream(fichierOutStream);
 			for(Categorie cat : this.listCategorie){
-				oos.writeObject(cat);
+				oos.writeObject(cat); //écriture des categories dans le fichier "categorie.ser"
 			}
 			oos.close();
+			
+			//Modification de la catégorie sur toutes les taches qui la possède
 			for(Tache t : this.listTache){
 				if(t.getCategorie() != null){
 					if(t.getCategorie().getIdentifiant() == catInfo.getIdentifiant())	t.setCategorie(catInfo);
 				}
 			}
-			updateTache();
+			for(Tache t : this.listTacheTermine){
+				if(t.getCategorie() != null){
+					if(t.getCategorie().getIdentifiant() == catInfo.getIdentifiant())	t.setCategorie(catInfo);
+				}
+			}
+			
+			updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		}
 	}
 	/**
@@ -321,10 +345,10 @@ public class ControllerApplication {
 			ObjectOutputStream oos=null;
 			oos = new ObjectOutputStream(fichierOutStream);
 			for(Tache tache : this.listTache){
-				oos.writeObject(tache);
+				oos.writeObject(tache); //écriture des taches dans le fichier "tache.ser"
 			}
 			oos.close();
-			updateTache();
+			updateTache(); //mise à jour des taches dans le fichier "tache.ser"
 		}
 	}
 	

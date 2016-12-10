@@ -21,7 +21,7 @@ import model_To_Do.Categorie;
 public class ModifCategorieDialog extends JDialog {
 	private static final long serialVersionUID = 1L;
 	private Categorie info;
-	private  JTextField nom;
+	private JTextField nom;
 	private MyFrame owner;
 
 
@@ -37,7 +37,7 @@ public class ModifCategorieDialog extends JDialog {
 
 	public Categorie showModifDialog(){
 		this.setVisible(true);      
-		return  info;      
+		return info;      
 	}
 	/**
 	 * Initialise les composants de la boîte de dialogue ModifCategorie

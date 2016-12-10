@@ -1,7 +1,4 @@
 package model_To_Do;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -120,7 +117,7 @@ public abstract class Tache implements Serializable {
 		return this.getEcheance().before(Calendar.getInstance());
 	}
 	
-	public String toString() {
+	public String toString() { 
 		SimpleDateFormat format1 = new SimpleDateFormat("yyyy-MM-dd");
 		String formatted = format1.format(echeance.getTime());
 		return "Tache [id=" + id + ", nom=" + nom + ", description=" + description + ", echeance=" + formatted

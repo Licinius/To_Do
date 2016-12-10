@@ -1,7 +1,4 @@
 package model_To_Do;
-import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.util.Calendar;
 import java.util.Map;
 
@@ -32,27 +29,24 @@ public class TacheLongCours extends Tache {
 	 * 
 	 */
 	public boolean isRetarded(){
-		long diff =  super.getEcheance().getTimeInMillis()-super.getDateDebut().getTimeInMillis();
-		long restant = Calendar.getInstance().getTimeInMillis()-super.getDateDebut().getTimeInMillis();
-		if(restant <diff/4){
+		//si la tache est terminé
+		if (granularite == 100) {
 			return false;
+		} else {
+			//diff : différence entre la prochaine echeance et la date actuelle
+			long diff = this.getNextEcheance().getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
+			if (diff > 0) {
+				return false;
+			} else {
+				return true;
+			}
 		}
-		if (restant<diff/2){
-			return granularite<25;
-				
-		}
-		if (restant<(3*diff)/4){
-			return granularite<50;
-		}
-		if(restant<diff){
-			return granularite<75;
-		}
-		
-		return granularite<100;
 	}
+	
 	public int getGranularite() {
 		return granularite;
 	}
+	
 	/**
 	 * Setter de la granularite si la granularite passe à 100% la tache est terminé
 	 * @param granularite
@@ -62,6 +56,7 @@ public class TacheLongCours extends Tache {
 			super.setTermine(true);
 		this.granularite = granularite;
 	}
+	
 	/**
 	 * Rajout de la granularite dans la Map
 	 */
@@ -74,19 +69,18 @@ public class TacheLongCours extends Tache {
 	public Calendar getNextEcheance(){
 		long diff =  super.getEcheance().getTimeInMillis()-super.getDateDebut().getTimeInMillis();
 		Calendar res = Calendar.getInstance();
-		if (granularite<25){
+		if (granularite < 25){
 			res.setTimeInMillis(super.getDateDebut().getTimeInMillis()+(diff/4));
 			return res;
-		}
-		if (granularite<50){
+		} else if (granularite < 50){
 			res.setTimeInMillis(super.getDateDebut().getTimeInMillis()+(diff/2));
 			return res;
-		}
-		if (granularite<75){
-			res.setTimeInMillis(super.getDateDebut().getTimeInMillis()+(3*diff/2));
+		} else if (granularite < 75){
+			res.setTimeInMillis(super.getDateDebut().getTimeInMillis()+(3*diff/4));
 			return res;
+		} else {
+			return super.getEcheance();
 		}
-		return super.getEcheance();
 	}
 	
 }

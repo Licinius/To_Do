@@ -20,6 +20,7 @@ import javax.swing.JScrollPane;
 import controller_To_Do.ControllerApplication;
 import model_To_Do.Categorie;
 import model_To_Do.Tache;
+import model_To_Do.TacheLongCours;
 import model_To_Do.TachePonctuelle;
 
 public class MyFrame extends JFrame{
@@ -343,7 +344,7 @@ public class MyFrame extends JFrame{
 		public void actionPerformed(ActionEvent e) {
 			BoutonTache bouton= (BoutonTache)e.getSource();
 			try {
-				controller.modifierGranularite(bouton.getTache());
+				controller.modifierGranularite((TacheLongCours) bouton.getTache());
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
