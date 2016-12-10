@@ -29,18 +29,15 @@ public class TacheLongCours extends Tache {
 	 * 
 	 */
 	public boolean isRetarded(){
-		//si la tache est terminé
-		if (granularite == 100) {
+
+		//diff : différence entre la prochaine echeance et la date actuelle
+		long diff = this.getNextEcheance().getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
+		if (diff > 0) {
 			return false;
 		} else {
-			//diff : différence entre la prochaine echeance et la date actuelle
-			long diff = this.getNextEcheance().getTimeInMillis() - Calendar.getInstance().getTimeInMillis();
-			if (diff > 0) {
-				return false;
-			} else {
-				return true;
-			}
+			return true;
 		}
+
 	}
 	
 	public int getGranularite() {
