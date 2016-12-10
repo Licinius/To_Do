@@ -50,7 +50,6 @@ public class AffichageBilan extends JDialog {
 			text+="<br>";
 		 }
 		 text+="</p>";
-		 System.out.println(nombreTache + "  " + nombreTacheRetard + "  " + nombreTacheTermine);
 		 if(nombreTache!=0){
 			 text+="<p> Pourcentage en retard : "+nombreTacheRetard*100/nombreTache + "%</p>";
 			 text+="<p> Pourcentage terminé : "+nombreTacheTermine*100/nombreTache + "%</p>";
