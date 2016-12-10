@@ -3,6 +3,7 @@ package view_To_Do;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.List;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -85,9 +86,11 @@ public class ModifTacheDialog extends JDialog {
 				}
 			}
 		}
+		
 		JComboBox<String> combo = new JComboBox<String>(tab);
 		combo.setPreferredSize(new Dimension(100, 20));
-		combo.setSelectedIndex(index);
+		if(listCat.size()>0)
+			combo.setSelectedIndex(index);
 		panCat.add(combo);
 
 		JPanel panDescription = new JPanel();
@@ -130,7 +133,8 @@ public class ModifTacheDialog extends JDialog {
 					if(values[0]<31 && values[1]<13 && values[2]>1970 && formatValid){
 						Calendar date = new GregorianCalendar(values[2], values[1]-1, values[0]);//YYYY MM-1 DD
 						if( date.equals(info.getEcheance())|| date.after(Calendar.getInstance())){
-							info.setCategorie(listCat.get(combo.getSelectedIndex()));
+							if(listCat.size()>0)
+								info.setCategorie(listCat.get(combo.getSelectedIndex()));
 							info.setDescription(description.getText());
 							info.setEcheance(new GregorianCalendar(values[2], values[1]-1, values[0]));
 							info.setNom(nom.getText());
