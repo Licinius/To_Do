@@ -17,7 +17,8 @@ public class AffichageBilan extends JDialog {
 	private int nombreTacheRetard;
 	private int nombreTacheTermine;
 	private int nombreTache;
-	public AffichageBilan(MyFrame parent, String title, boolean modal,ArrayList<Tache> to_Do,int nombreTacheRetard,int nombreTacheTermine,int nombreTache){
+	private int nombreTacheTermineEnRetard;
+	public AffichageBilan(MyFrame parent, String title, boolean modal,ArrayList<Tache> to_Do,int nombreTacheRetard,int nombreTacheTermine,int nombreTacheTermineEnRetard,int nombreTache){
 		super(parent, title, modal);
 		this.setSize(550, 270);
 		this.setLocationRelativeTo(null);
@@ -27,6 +28,7 @@ public class AffichageBilan extends JDialog {
 		this.nombreTache = nombreTache;
 		this.nombreTacheTermine=nombreTacheTermine;
 		this.nombreTacheRetard = nombreTacheRetard;
+		this.nombreTacheTermineEnRetard = nombreTacheTermineEnRetard;
 		this.initComponent();
 	}
 	
@@ -48,9 +50,12 @@ public class AffichageBilan extends JDialog {
 			text+="<br>";
 		 }
 		 text+="</p>";
+		 System.out.println(nombreTache + "  " + nombreTacheRetard + "  " + nombreTacheTermine);
 		 if(nombreTache!=0){
-			 text+="<p> Pourcentage en retard "+nombreTacheRetard*100/nombreTache + "%</p>";
-			 text+="<p> Pourcentage terminé "+nombreTacheTermine*100/nombreTache + "%</p>";
+			 text+="<p> Pourcentage en retard : "+nombreTacheRetard*100/nombreTache + "%</p>";
+			 text+="<p> Pourcentage terminé : "+nombreTacheTermine*100/nombreTache + "%</p>";
+			 text+="<p> Pourcentage de tache terminé en retard : "+ nombreTacheTermineEnRetard*100/nombreTacheTermine + "%</p>";
+			
 		 }
 		 text+="</html>";
 		 jl.setText(text);

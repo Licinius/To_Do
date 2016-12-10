@@ -275,6 +275,7 @@ public class MyFrame extends JFrame{
 				ArrayList<Tache> toDo = new ArrayList<Tache>();
 				int nombreTacheRetard = 0;
 				int nombreTacheTermine = 0;
+				int nombreTacheTermineEnRetard=0;
 				for(Tache t : arT){
 					if(!t.isTermine()){
 						toDo.add(t);
@@ -284,11 +285,13 @@ public class MyFrame extends JFrame{
 						
 					}else{
 						nombreTacheTermine++;
+						if(t.isRetard())
+							nombreTacheTermineEnRetard++;
 						
 					}
 				}
 				
-				AffichageBilan aB = new AffichageBilan(null, "Bilan de la période", true, toDo, nombreTacheRetard, nombreTacheTermine, toDo.size());
+				AffichageBilan aB = new AffichageBilan(null, "Bilan de la période", true, toDo, nombreTacheRetard, nombreTacheTermine,nombreTacheTermineEnRetard, arT.size());
 			}
 			
 		}
