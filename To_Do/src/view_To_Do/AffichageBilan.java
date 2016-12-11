@@ -53,9 +53,11 @@ public class AffichageBilan extends JDialog {
 		 if(nombreTache!=0){
 			 text+="<p> Pourcentage en retard : "+nombreTacheRetard*100/nombreTache + "%</p>";
 			 text+="<p> Pourcentage terminé : "+nombreTacheTermine*100/nombreTache + "%</p>";
+		 }
+		 if(nombreTacheTermine!=0)
 			 text+="<p> Pourcentage de tache terminé en retard : "+ nombreTacheTermineEnRetard*100/nombreTacheTermine + "%</p>";
 			
-		 }
+		
 		 text+="</html>";
 		 jl.setText(text);
 		 this.add(jl);
