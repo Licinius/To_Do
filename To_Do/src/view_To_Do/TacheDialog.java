@@ -140,7 +140,7 @@ public class TacheDialog extends JDialog {
 							formatValid = false;
 						}
 					}
-					if(values[0]<31 && values[1]<13 && values[2]>1970 && formatValid){
+					if(values[0]<32 && values[1]<13 && values[2]>1970 && formatValid){
 						echeance.setBackground(Color.WHITE);
 						Categorie cat = owner.getController().getListCategorie().get(combo.getSelectedIndex());
 						Calendar date = new GregorianCalendar(values[2], values[1]-1, values[0]);//YYYY MM-1 DD
