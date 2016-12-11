@@ -130,7 +130,7 @@ public class ModifTacheDialog extends JDialog {
 							formatValid = false;
 						}
 					}
-					if(values[0]<31 && values[1]<13 && values[2]>1970 && formatValid){
+					if(values[0]<32 && values[1]<13 && values[2]>1970 && formatValid){
 						Calendar date = new GregorianCalendar(values[2], values[1]-1, values[0]);//YYYY MM-1 DD
 						if( date.equals(info.getEcheance())|| date.after(Calendar.getInstance())){
 							if(listCat.size()>0)
