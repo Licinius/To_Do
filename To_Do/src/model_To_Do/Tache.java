@@ -87,8 +87,7 @@ public abstract class Tache implements Serializable {
 
 	public void setEcheance(Calendar echeance) {
 		this.echeance = echeance;
-		if(isRetarded())
-			setRetard(true);
+		setRetard(isRetarded());
 	}
 
 	public static int getCompteur() {
