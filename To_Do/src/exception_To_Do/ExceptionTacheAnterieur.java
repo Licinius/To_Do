@@ -1,5 +1,7 @@
-package exception_To_Do;
-
+﻿package exception_To_Do;
+/**
+ Exception tache anterieur
+**/
 public class ExceptionTacheAnterieur extends ExceptionTache {
 	private static final long serialVersionUID = -2007491263257383995L;
 	public ExceptionTacheAnterieur(String strDate){
